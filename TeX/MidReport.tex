@@ -1,0 +1,111 @@
+\documentclass[11pt,a4paper,uplatex]{ujarticle} 
+\usepackage{bm}
+\usepackage{amsmath}
+\usepackage{comment}
+\usepackage{amsthm}       
+\usepackage{multicol}
+\usepackage{subcaption}
+\usepackage{setspace}
+\usepackage{MnSymbol}
+\usepackage{listings,jvlisting}
+\usepackage{enumerate}
+\usepackage{braket}
+\usepackage[version=3]{mhchem} % Package for chemical equation typesetting
+\usepackage{siunitx} % Provides the \SI{}{} and \si{} command for typesetting SI units
+\usepackage[dvipdfmx]{graphicx, hyperref}%,hyperref % Required for the inclusion of images
+\usepackage{pxjahyper}%, Required to fix garbled text
+\usepackage[square,sort,comma,numbers]{natbib} % Required to change bibliography style to APA
+% \usepackage{ascmac}
+% \usepackage{float}
+% \usepackage{color}
+% \usepackage{wrapfig}
+% \usepackage{bookmark}
+% \usepackage{indentfirst}
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs
+\hypersetup{colorlinks=true, linkcolor=black} %delete red lines 
+\makeatletter
+\newcommand{\figcaption}[1]{\def\@captype{figure}\caption{#1}}
+\newcommand{\tblcaption}[1]{\def\@captype{table}\caption{#1}}
+\makeatother
+
+%\renewcommand{\labelenumi}{\alph{enumi}.} % Make numbering in the enumerate environment by letter rather than number (e.g. section 6) これはあまりいらないかも
+
+
+%\usepackage{times} % Uncomment to use the Times New Roman font
+
+%----------------------------------------------------------------------------------------
+%	DOCUMENT INFORMATION
+%----------------------------------------------------------------------------------------
+
+%ここからソースコードの表示に関する設定
+\lstset{
+  basicstyle={\ttfamily},
+  identifierstyle={\small},
+  commentstyle={\smallitshape},
+  keywordstyle={\small\bfseries},
+  ndkeywordstyle={\small},
+  stringstyle={\small\ttfamily},
+  frame={tb},
+  breaklines=true,
+  columns=[l]{fullflexible},
+  numbers=left,
+  xrightmargin=0zw,
+  xleftmargin=3zw,
+  numberstyle={\scriptsize},
+  stepnumber=1,
+  numbersep=1zw,
+  lineskip=-0.5ex
+}
+\hypersetup{citecolor=black}
+\usepackage[top=30truemm,bottom=30truemm,left=25truemm,right=25truemm]{geometry}
+% 全体のページ設定
+% ページ番号をフッタにふる
+% \pagestyle{plain}
+\makeatletter
+ 
+\def\@thesis{令和4年度　卒業論文中間報告書}
+\def\teacher#1{\def\@teacher{#1}}
+\def\department#1{\def\@department{#1}}
+\def\id#1{\def\@id{#1}}
+ 
+\def\@maketitle{
+\begin{center}
+{\Large \@thesis \par} %修士論文と記載される部分
+\vspace{30mm}
+{\Huge\bf \@title \par}% 論文のタイトル部分
+\vspace{30mm}
+{\Large \@date 提出\par} % 提出年月日部分
+\vspace{20mm}
+{\Large 指導教員　\@teacher \par} % 指導教員部分
+\vspace{10mm}
+{\Large \@department \par} % 所属部分
+\vspace{10mm}
+{\Large 学生証番号　\@id \par} % 学籍番号部分
+\vspace{15mm}
+{\Large \@author}% 氏名
+\end{center}
+%\par\vskip 1.5em
+}
+
+\makeatother
+
+\title{サンプル}
+\teacher{廣瀬　明　教授\\
+		\qquad \qquad \qquad 夏秋　嶺　准教授}
+\date{令和3年 9月30日}
+\department{東京大学　工学部　電子情報工学科}
+\id{03-200396}
+\author{渡辺　裕貴}
+\begin{document}
+
+\maketitle
+\newpage
+\tableofcontents
+\newpage
+\section{序論}
+\section{背景}
+\section{研究手法}
+
+
+\end{document}

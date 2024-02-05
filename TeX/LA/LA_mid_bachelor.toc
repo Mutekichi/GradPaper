@@ -1,0 +1,18 @@
+\contentsline {section}{\numberline {1}序論}{3}{section.1}%
+\contentsline {section}{\numberline {2}ミリ波を用いた血糖値の測定原理}{3}{section.2}%
+\contentsline {subsection}{\numberline {2.1}測定原理}{3}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}周波数選択}{4}{subsection.2.2}%
+\contentsline {section}{\numberline {3}関連研究}{4}{section.3}%
+\contentsline {subsection}{\numberline {3.1}複素ニューラルネットワークを用いたグルコース水溶液の濃度推定}{4}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}ヒトを対象とした血糖値の非侵襲型測定の研究}{4}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}関連研究における課題}{6}{subsection.3.3}%
+\contentsline {section}{\numberline {4}提案手法}{6}{section.4}%
+\contentsline {section}{\numberline {5}実験}{8}{section.5}%
+\contentsline {subsection}{\numberline {5.1}実験方法}{8}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}複素ニューラルネットワーク}{8}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}評価方法}{9}{subsection.5.3}%
+\contentsline {subsection}{\numberline {5.4}食後血糖値の測定}{10}{subsection.5.4}%
+\contentsline {subsection}{\numberline {5.5}測定箇所による影響}{12}{subsection.5.5}%
+\contentsline {subsection}{\numberline {5.6}考察}{12}{subsection.5.6}%
+\contentsline {section}{\numberline {6}今後の課題}{13}{section.6}%
+\contentsline {section}{参考文献}{14}{section*.14}%

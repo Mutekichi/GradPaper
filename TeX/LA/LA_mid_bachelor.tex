@@ -1,0 +1,401 @@
+\documentclass[11pt,a4paper,uplatex,draft]{ujarticle} 
+\usepackage{bm}
+\usepackage{amsmath}
+\usepackage{comment}
+\usepackage{amsthm}       
+\usepackage{multicol}
+\usepackage{subcaption}
+\usepackage{setspace}
+\usepackage{MnSymbol}
+\usepackage{listings,jvlisting}
+\usepackage{enumerate}
+\usepackage{braket}
+\usepackage[version=3]{mhchem} % Package for chemical equation typesetting
+\usepackage{siunitx} % Provides the \SI{}{} and \si{} command for typesetting SI units
+\usepackage[dvipdfmx]{graphicx, hyperref}%,hyperref % Required for the inclusion of images
+\usepackage{pxjahyper}%, Required to fix garbled text
+\usepackage[square,sort,comma,numbers]{natbib} % Required to change bibliography style to APA
+% \usepackage{ascmac}
+% \usepackage{float}
+% \usepackage{color}
+% \usepackage{wrapfig}
+% \usepackage{bookmark}
+% \usepackage{indentfirst}
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs
+\hypersetup{colorlinks=true, linkcolor=black} %delete red lines 
+\makeatletter
+\newcommand{\figcaption}[1]{\def\@captype{figure}\caption{#1}}
+\newcommand{\tblcaption}[1]{\def\@captype{table}\caption{#1}}
+\makeatother
+
+%\renewcommand{\labelenumi}{\alph{enumi}.} % Make numbering in the enumerate environment by letter rather than number (e.g. section 6) これはあまりいらないかも
+
+
+%\usepackage{times} % Uncomment to use the Times New Roman font
+
+%----------------------------------------------------------------------------------------
+%	DOCUMENT INFORMATION
+%----------------------------------------------------------------------------------------
+
+%ここからソースコードの表示に関する設定
+\lstset{
+  basicstyle={\ttfamily},
+  identifierstyle={\small},
+  commentstyle={\smallitshape},
+  keywordstyle={\small\bfseries},
+  ndkeywordstyle={\small},
+  stringstyle={\small\ttfamily},
+  frame={tb},
+  breaklines=true,
+  columns=[l]{fullflexible},
+  numbers=left,
+  xrightmargin=0zw,
+  xleftmargin=3zw,
+  numberstyle={\scriptsize},
+  stepnumber=1,
+  numbersep=1zw,
+  lineskip=-0.5ex
+}
+\hypersetup{citecolor=black}
+\usepackage[top=30truemm,bottom=30truemm,left=25truemm,right=25truemm]{geometry}
+% 全体のページ設定
+% ページ番号をフッタにふる
+% \pagestyle{plain}
+\makeatletter
+ 
+\def\@thesis{令和3年度　卒業論文中間報告書}
+\def\teacher#1{\def\@teacher{#1}}
+\def\department#1{\def\@department{#1}}
+\def\id#1{\def\@id{#1}}
+ 
+\def\@maketitle{
+\begin{center}
+{\Large \@thesis \par} %修士論文と記載される部分
+\vspace{30mm}
+{\Huge\bf \@title \par}% 論文のタイトル部分
+\vspace{30mm}
+{\Large \@date 提出\par} % 提出年月日部分
+\vspace{20mm}
+{\Large 指導教員　\@teacher \par} % 指導教員部分
+\vspace{10mm}
+{\Large \@department \par} % 所属部分
+\vspace{10mm}
+{\Large 学生証番号　\@id \par} % 学籍番号部分
+\vspace{15mm}
+{\Large \@author}% 氏名
+\end{center}
+%\par\vskip 1.5em
+}
+ 
+\makeatother
+
+\title{ミリ波を用いた血糖値非侵襲測定の\\高精度化}
+\teacher{廣瀬　明　教授\\
+		\qquad \qquad \qquad 夏秋　嶺　准教授}
+\date{令和3年 9月30日}
+\department{東京大学　工学部　電子情報工学科}
+\id{03-200396}
+\author{東　里奈}
+\begin{document}
+
+\maketitle
+\newpage
+\tableofcontents
+\newpage
+\section{序論}
+　世界中で糖尿病患者の数が急速に増加している。
+2019年時点で、20歳以上80歳未満において4億6300万人の患者がいると推定されており、その数は2030年までには5億7800万人に、2045年までには7億人に到達すると予想されている。
+糖尿病には大きく分けてI型、I\hspace{-.1em}I型が存在しており、I型の患者は膵臓からのインスリン不足により、I\hspace{-.1em}I型の患者はインスリンの働きの低下により血糖値が下がりにくい。
+持続的な高血糖は網膜症、腎症、神経障害など様々な合併症を引き起こすため、糖尿病患者の寿命を縮め、生活の質を低下させることに繋がっている。そこで、これらの合併症の発症を予防したり、進行を遅らせたりするために血糖値を日々モニタリングしコントロールすることが重要である\cite{idf}。
+しかし、従来型の電気化学的手法による測定では血液が不可欠であり、指などに穿刺して血を採取する必要がある。これは痛みを伴うだけでなく、感染症のリスクにもなり、日に複数回の測定が欠かせない糖尿病患者にとって大きな負担となる。
+　この問題を解決するため、数十年間様々な非侵襲型の血糖値測定法が模索されてきた。例えば、光コヒーレンストモグラフィーや近赤外分光法などの方法である。 しかし、血糖値は非常にわずかな値であるために測定が難しく、それらの精度、信頼性は侵襲型のものと比較し依然劣っており、非侵襲型の測定法における精度向上が課題となっている\cite{review}。\\
+　様々な非侵襲型測定法の中で、ミリ波を用いた測定法は数ミリ程度の薄い生体組織を透過することができ、感度が高いという点で有望視されている。先行研究では誘電率とグルコース濃度に関係があることが示されており、この関係性をもとに、ミリ波の反射波や透過波の振幅、位相とグルコース濃度には相関が見られることが分かっている\cite{Nikawa} - \cite{OMER}。 
+また、ネズミや豚などの動物実験においても反射波や透過波と血糖値の関連が見られている\cite{pig}。
+さらに、複素ニューラルネットワークを用いて、グルコース水溶液の透過波の位相、振幅データから血糖値の現実的な範囲における濃度の推定が可能であることが分かっている\cite{Husan}。
+これらの先行研究は電磁波の高い可能性を示しているが、グルコース水溶液を用いた研究やシュミレーションによる研究が多く、ヒトを対象とした研究での成果が少なく、精度の安定性に問題がある。\\
+　本研究の目的は、ヒトを対象とした実験を行い、振幅、位相データより複素ニューラルネットワークを用いて精度、信頼性の高い非侵襲の血糖値測定を行うことである。
+
+\section{ミリ波を用いた血糖値の測定原理}
+
+\subsection{測定原理}
+　先行研究\cite{Nikawa}により、異なる濃度のグルコース水溶液では異なる誘電率を持つことが分かっている。これは、水素結合をもつため極性が大きく誘電率が高い水に対してグルコースの誘電率は低いことによる。
+また、血液においても血糖値が変化すると誘電率が変化することが実験的に分かっている\cite{Cole-cole}\cite{FREER}。
+ベクトルネットワークアナライザ（Vector Network Analyzer,VNA)を用いて被測定対象のSパラメータを測定することで、反射波S11、透過波S21の位相、振幅データとして血糖値の変化を捉えることが可能である。先行研究\cite{trans}により、透過波は反射波よりも測定に適していることが分かっているため、本研究では透過波S21を用いる。
+
+\newpage
+\subsection{周波数選択}
+損失を考慮した複素誘電率$\epsilon_r$の媒質中の電波伝搬について波動方程式を求めることで、減衰定数$\alpha$と位相定数$\beta$がそれぞれ
+\begin{equation}
+   \alpha = \sqrt{\frac{1}{2}\omega^2\mu_0(\sqrt{\epsilon'^2+\epsilon''^2}-\epsilon')}
+\end{equation}
+\begin{equation}
+   \beta =  \sqrt{\frac{1}{2}\omega^2\mu_0(\sqrt{\epsilon'^2+\epsilon''^2}+\epsilon')}
+\end{equation}
+と求まる。ここで、$\epsilon'$は複素誘電率$\epsilon_r$の実部、$\epsilon''$は虚部を表す。ただし、本研究で対象とする媒質である生体組織における複素誘電率$\epsilon_r$は周波数依存性があり、デバイ緩和の式より
+\begin{equation}
+   \epsilon_r(\omega,\chi) =  \epsilon_{\infty} + \frac{\epsilon_{stat}(\chi)-\epsilon_{\infty}(\chi)}{1 + j\omega\tau(\chi)}
+\end{equation}
+と表される。ここで、$\epsilon_{\infty}$は周波数が十分高いときの誘電率、$\epsilon_{stat}$は周波数が十分低いときの誘電率、$\omega$は角周波数、$\chi$は溶解物質の濃度,$\tau$は時定数を表している。
+以上より、周波数を高くすると位相の差が大きくなるために感度は向上するが、減衰が大きくなりヒトの組織を透過しづらくなる。感度と透過のしやすさにはトレードオフの関係が存在しているため、本研究における測定対象の水かきを透過可能な範囲で感度が高い、60GHzから70GHzまでを使用周波数帯域とした。
+
+\section{関連研究}
+\subsection{複素ニューラルネットワークを用いたグルコース水溶液の濃度推定}
+血糖値の上昇や、下降における変化を追うだけでなく、透過波の位相、振幅から血糖値の推測を実際に行った研究が次である\cite{Husan}。図\ref{fig:husan_ex1}は先行研究の実験概念図を、図\ref{fig:husan_ex2}は実際に測定を行った装置を表している。この研究では室温下(23-25℃)において、60GHzから80GHzまでのミリ波をホーンアンテナから放射し、グルコース水溶液(0,50,100,..300mg/dL)を入れたシャーレからなる厚さ1.5mmの容器を透過させ、反対側に設置したホーンアンテナで透過波を受け取った。異なる濃度のグルコース水溶液における透過波S21の振幅、位相はVNAを用いて測定された。
+
+\begin{figure}[htbp]
+    \begin{minipage}{0.5\hsize}
+        \begin{center}
+            \includegraphics[width=70mm]{figure/experiment_setup.pdf}
+        \end{center}
+        \caption{先行研究の実験概念図}
+        \label{fig:husan_ex1}
+    \end{minipage}
+    \begin{minipage}{0.5\hsize}
+        \begin{center}
+            \includegraphics[width=65mm]{figure/setup_new1.JPG}
+        \end{center}
+        \caption{先行研究の実験装置}
+        \label{fig:husan_ex2}
+    \end{minipage}
+\end{figure}
+
+こうして得られたデータは波動を扱うことに適した性質をもつ複素ニューラルネットワークを用いて学習、推定された。ニューラルネットワークは脳の構造を模倣した数理モデルであり、複素ニューラルネットワークはそれを複素数領域に拡張したもので、図\ref{fig:cvnn}はその構成である\cite{CVNN}。
+図\ref{fig:husan_teacher}で表されるように複素数平面における単位円上に教師データを作成し、最急降下法によって重みを更新し、学習した結果が図\ref{fig:husan_result}である。この研究により人間の現実的な血糖値の範囲において、グルコース濃度を適応的に推定可能であることが示された。
+
+\begin{figure}[hbtp]
+	\centering
+	\includegraphics[width=100mm]{figure/cvnn_structure.pdf}
+	\caption{複素ニューラルネットワークの構成}
+	\label{fig:cvnn}
+\end{figure}
+
+\begin{figure}[htbp]
+    \begin{minipage}{0.5\hsize}
+        \begin{center}
+            \includegraphics[width=70mm]{figure/husan_teacher.pdf}
+        \end{center}
+        \caption{出力の教師信号}
+        \label{fig:husan_teacher}
+    \end{minipage}
+    \begin{minipage}{0.5\hsize}
+        \begin{center}
+            \includegraphics[width=70mm]{figure/output_training_example_r4.eps}
+        \end{center}
+        \caption{推定結果}
+        \label{fig:husan_result}
+    \end{minipage}
+\end{figure}
+
+\subsection{ヒトを対象とした血糖値の非侵襲型測定の研究}
+3.1節における研究をもとに、グルコース水溶液でなく数ミリ程度の薄い生体組織である水かきを透過させ、同様に複素ニューラルネットワークを用いた血糖値の推定を行う研究が行われた\cite{Nagaesan}。テーパー構造に加工されたシリコンを皮膚に当てる導波管に充填し、インピーダンス整合をとることで皮膚における反射を抑え、シリコンの有効性を示した。
+
+\newpage
+\subsection{関連研究における課題}
+3.2節における研究では、ヒトを対象とした実験における血糖値測定の可能性を示した。しかし、大きく分けて(1)データ数の不足、(2)安定性、(3)測定装置の大きさの3つの問題点が残されている。\\
+
+(1)提案している非侵襲型の測定と、従来型の侵襲型の測定をそれぞれ30分間分行ったが、測定間隔が5分と広く3.1節で用いられた複素ニューラルネットワークで学習、推定を行うためにはデータ数が非常に少ない。精度の評価をするためにはデータ数を増やす必要がある。また、3.2節の研究においてはヒトを対象とした実験を行ったが120mg/dL程度までの血糖値しか測定できていない。一般に糖尿病患者では120mg/dLより血糖値が上がってしまうことが多くあるため、より高血糖な範囲においての測定が必要である。\\
+
+(2)3.2節の研究では得られるデータの安定性を向上するためにシリコンを用いたが、得られる透過波S21の振幅が小さいため依然としてノイズがのりやすく、わずかな外部要因により推定を大きく外してしまう可能性がある。\\
+
+(3)現在用いている装置は60GHz以上の高周波を出し、測定するVNAであり非常に大型なものとなっている。将来的に、一般に利用できる測定器とするには小型化をする必要がある。
+
+\section{提案手法}
+3.3節で述べた課題の解決のために、それぞれ以下のような手法、実験を提案する。\\
+
+(1)本研究ではAbbott社の侵襲型測定器Freestyle Libreを左腕上部に装着し、提案する非侵襲型の測定法と同時に血糖値を毎分取得することで、教師データを含むデータ数の増加を図る。また、糖尿病患者を含む血液検体の透過波S21から血糖値の推測を行う実験により、高血糖においても同様に推定が可能であることを確認する。グルコース水溶液を用いた研究は数多く行われてきたが、血液を用いた現実的範囲における血糖値の推定に関する研究は十分に行われていない。血液では、グルコース濃度が増えるとヘモグロビンがグリコヘモグロビンへと変化するなどグルコース水溶液では起こらない現象も起こるため、グルコース水溶液と同様なメカニズムにより3.1節の研究のように結果が得られるかを確かめることにも意義がある。\\
+
+(2)一般に、透過波S21の振幅、位相のデータの絶対的な値を用いて血糖値を推定することは難しい。被験者の変更、測定箇所のずれなどの影響を、脈拍を利用する、ある基準周波数$F_{s}$における値とより高周波$F$における値との比較を取る、といった新しいデータの取得方法、処理方法や、毎回全く同じ位置で観測できるような測定装置の形状の提案により軽減する。\\
+
+(3)VNAは信号源を持ち、被測定対象の周波数応答を測定する。信号源となるミリ波発振器、測定を行うためにIQミクサーなどのミリ波部品を組み合わせることで小型化することが可能である。これを用いて水かき、耳たぶなどの薄い生体組織を透過させ、血糖値の測定を行う。小型化することにより、現在は装置の構造上の問題から測定ができていない耳たぶでも測定することが可能となり、より長時間の測定ができる。
+
+\newpage
+\section{実験}
+\subsection{実験方法}
+実験の流れは以下の通りである。
+\begin{enumerate}
+  \item 侵襲型測定器Freestyle Libreを左腕(利き腕ではない腕)上部に装着する。
+  \item 食事を開始する。
+  \item 図\ref{fig:exp}のように左手の水かき部分の皮膚を左右の導波管の間に挟みこむ。ここで、導波管同士の間隔は3mmとした。
+  \item 左手は動かさず、Freestyle Libreのセンサーからグルコース値を、VNAから透過波S21のデータをそれぞれ毎分記録する。
+  \item 4を50分程度行う。ただし侵襲型測定器によるグルコース値の測定のみ、さらに10分間行う。
+\end{enumerate}
+Freestyle Libreはセンサー装着後最大14日間使用可能であるが、装着時にキャリブレーションのため1時間測定不可能となる。食事摂取前に十分余裕をもって装着する。また、2で摂取する食事は、血糖値を急激に上昇させ、変化を大きくするため米、パンなどの高GI食品とする。4において侵襲型測定器のみ10分長く測定するのは、使用する機器が間質液中のグルコース値を読み取るものであり、間質液中のグルコース値は血糖値から10分ほど遅れて変化することに由来する。なお、実験中は可能な限り手を固定して動きのないようにして測定する。
+
+
+\begin{figure}[hbtp]
+	\centering
+	\includegraphics[width=50mm]{figure/exp.JPG}
+	\caption{実験の様子}
+	\label{fig:exp}
+\end{figure}
+
+
+\subsection{複素ニューラルネットワーク}
+先行研究\cite{Husan}に倣い図\ref{fig:teacher_out}のように教師信号を作成した。
+入力は60GHzから70GHzまでの等間隔の周波数401点における透過波S21の振幅、位相である。ただし、振幅、位相は、それぞれ0から1、0からπまでの正規化を行った。
+複素ニューラルネットワークの構造は、一層目のニューロン数が401,二層目が50,出力が1となっており、出力は複素平面上にプロットされて血糖値に変換される。また、位相学習率、振幅学習率はそれぞれ0.05、エポックは100である。
+
+\begin{figure}[hbtp]
+	\centering
+	\includegraphics[width=70mm]{figure/teacher.PNG}
+	\caption{出力の教師信号}
+	\label{fig:teacher_out}
+\end{figure}
+
+
+\subsection{評価方法}
+血糖値測定器は国際標準化機構（International Organization for Standardization, ISO）において以下の分析的精確性を持つことが求められている。	本研究における評価も次の条件1.2を参考に行う。
+
+\begin{enumerate}
+  \item 測定器の95\%が、グルコース濃度が100mg/dL未満の時$\pm 15$mg/dL、100mg/dL以上の時$\pm 15$\%の範囲内
+  \item 測定器の99\%がパークスのI型糖尿病患者のコンセンサスエラーグリッド(図\ref{fig:parks})におけるゾーンA(臨床行為に影響なし)、およびゾーンB(臨床行為の変更にほどんど、もしくは全く影響なし)の範囲内
+\end{enumerate}
+
+\begin{figure}[hbtp]
+	\centering
+	\includegraphics[width=70mm]{figure/parkserror.PNG}
+	\caption{Parkes error grid (I型糖尿病患者)\cite{parkes}}
+	\label{fig:parks}
+\end{figure}
+
+\newpage
+\subsection{食後血糖値の測定}
+50分間の測定において得られたデータからランダムに8割を学習用データ、残りをテスト用データとし5.2節で述べた複素ニューラルネットワークを用いて推定した結果と実際の血糖値における誤差を比較する。
+
+60GHzから70GHzにおいて得られた透過波S21の振幅、位相は図\ref{fig:S21MA}、\ref{fig:S21AA}のようになった。図には測定開始から5分刻みで得られたデータを可視化してある。図\ref{fig:glu}はFreestyle Libreを用いて得られた間質液中のグルコース値のグラフである。これを10分ずらす処理を行った後のものが図\ref{fig:glu10}である。図\ref{fig:glu10}における20分以降、センサーエラーにて値をとれない部分があったため、欠損値においては前後の値を用いた線形補間を行い血糖値の値とした。
+図\ref{fig:train1}、\ref{fig:test1}はそれぞれ推定結果と実際の血糖値をプロットしたものである。色付けされた部分が5.3節における条件1を満たす部分を示す。また、図\ref{fig:train2}、\ref{fig:test2}は条件2のコンセンサスエラーグリッドに推定結果をプロットしたものである。ただし、条件2の各リスクゾーンについての定義は文献\cite{parkes area}の表1を参考にした。
+
+\begin{figure}[htbp]
+    \begin{minipage}{0.5\hsize}
+        \begin{center}
+            \includegraphics[width=70mm]{figure/S21_change_half_ver3.PNG}
+        \end{center}
+        \caption{S21(振幅)の変化}
+        \label{fig:S21MA}
+    \end{minipage}
+    \begin{minipage}{0.5\hsize}
+        \begin{center}
+            \includegraphics[width=70mm]{figure/S21_changeA_half_ver3.PNG}
+        \end{center}
+        \caption{S21(位相)の変化}
+        \label{fig:S21AA}
+    \end{minipage}
+\end{figure}
+
+\begin{figure}[htbp]
+     \begin{minipage}{0.5\hsize}
+         \begin{center}
+             \includegraphics[width=70mm]{figure/libre_before.eps}
+         \end{center}
+         \caption{間質液中のグルコース値の変化}
+         \label{fig:glu}
+     \end{minipage}
+     \begin{minipage}{0.5\hsize}
+         \begin{center}
+             \includegraphics[width=70mm]{figure/libre_after.eps}
+         \end{center}
+         \caption{実際の血糖値の変化}
+         \label{fig:glu10}
+     \end{minipage}
+\end{figure}
+
+\begin{figure}[htbp]
+     \begin{minipage}{0.5\hsize}
+         \begin{center}
+             \includegraphics[width=70mm]{figure/train_6070.png}
+         \end{center}
+         \caption{学習用データの推定結果(条件1)}
+         \label{fig:train1}
+     \end{minipage}
+     \begin{minipage}{0.5\hsize}
+         \begin{center}
+             \includegraphics[width=70mm]{figure/test_6070.png}
+         \end{center}
+         \caption{テスト用データの推定結果(条件1)}
+         \label{fig:test1}
+     \end{minipage}
+\end{figure}
+
+\begin{figure}[htbp]
+     \begin{minipage}{0.5\hsize}
+         \begin{center}
+             \includegraphics[width=70mm]{figure/train_parkes_alpha.png}
+         \end{center}
+         \caption{学習用データの推定結果(条件2)}
+         \label{fig:train2}
+     \end{minipage}
+     \begin{minipage}{0.5\hsize}
+         \begin{center}
+             \includegraphics[width=70mm]{figure/test_parkes_alpha.png}
+         \end{center}
+         \caption{テスト用データの推定結果(条件2)}
+         \label{fig:test2}
+     \end{minipage}
+\end{figure}
+\newpage
+\subsection{測定箇所による影響}
+導波管同士の間隔は一定に保ったまま、水かきの測定箇所を図\ref{fig:hand}のように上部、中部、下部と変化させたときの透過波S21の振幅、位相における変化をみる。図\ref{fig:S21MB}、\ref{fig:S21AB}は60GHzから70GHzにおける透過波S21の振幅、位相のデータである。
+
+\begin{figure}[hbtp]
+	\centering
+	\includegraphics[width=70mm]{figure/C123hand_clear.png}
+	\caption{測定箇所}
+	\label{fig:hand}
+\end{figure}
+
+\begin{figure}[htbp]
+    \begin{minipage}{0.5\hsize}
+        \begin{center}
+            \includegraphics[width=70mm]{figure/S21M_3.PNG}
+        \end{center}
+        \caption{S21(振幅)}
+        \label{fig:S21MB}
+    \end{minipage}
+    \begin{minipage}{0.5\hsize}
+        \begin{center}
+            \includegraphics[width=70mm]{figure/S21A_3.PNG}
+        \end{center}
+        \caption{S21(位相)}
+        \label{fig:S21AB}
+    \end{minipage}
+\end{figure}
+
+\subsection{考察}
+5.4節の結果では、テストデータは全て分析的精確性の基準を満たしており、十分な精度を得られているが、5.5節の結果より測定箇所がわずかに変化すると導波管同士の間隔が一定であっても得られる値が大きく変化してしまうことが分かる。血液中のグルコースが占める割合が非常に低く、血糖値変化によって生じる透過波S21の変化がわずかであるため、わずかな反射面の変化、経路の変化でも血糖値変化と同程度の振幅、位相変化が起こってしまう。被験者が変わることでも同様なことが起こると予想できる。被験者の変化や測定箇所の変化にも対応できるようにするためには、4章で述べたデータの取得方法の工夫や、得られたデータの前処理の工夫が必要になる。また、本実験で得られた血糖値は最高でも160mg/dL程度であり、糖尿病患者の高血糖時をかなり下回っているため、より高血糖においても同様に変化が得られるかを今後検証しなければならない。
+
+\section{今後の課題}
+血液検体を用いた実験、小型化した測定装置を用いた実験ができていないため、今後行う予定である。また、提案した脈拍を利用する、基準周波数を設けるなど新たなデータの処理手法を用いることで、糖尿病患者が実際に使うことのできる測定法となるように精度、信頼性向上を行う予定である。
+
+\newpage
+\begin{thebibliography}{99}
+\bibitem{idf} International Diabetes Federation IDF Diabetes Atlas (9th ed.), International Diabetes Federation, Brussels, Belgium (2019) . Available at: https://www.diabetesatlas.org/en/resources/
+
+\bibitem{review} VILLENA GONZALES, Wilbert; MOBASHSHER, Ahmed Toaha; ABBOSH, Amin. The progress of glucose monitoring—A review of invasive to minimally and non-invasive techniques, devices and sensors. Sensors, 2019, 19.4: 800.
+
+\bibitem{Nikawa} NIKAWA, Yoshio; MICHIYAMA, Tetsuyuki. Blood-sugar monitoring by reflection of millimeter wave. In: 2007 Asia-Pacific Microwave Conference. IEEE, 2007. p. 1-4.
+
+\bibitem{Cole-cole}  HAYS, Madeline, et al. Glucose‐dependent dielectric Cole‐Cole models of rat blood plasma from 500 MHz to 40 GHz for millimeter‐wave glucose detection. Microwave and Optical Technology Letters, 2020, 62.9: 2813-2820.
+
+\bibitem{FREER} FREER, Benjamin. Feasibility of a non-invasive wireless blood glucose monitor. Rochester Institute of Technology, 2011.
+
+
+\bibitem{OMER} OMER, Ala Eldin, et al. Blood glucose level monitoring using an FMCW millimeter-wave radar sensor. Remote Sensing, 2020, 12.3: 385.
+
+\bibitem{pig} CANO-GARCIA, Helena, et al. Millimeter-wave sensing of diabetes-relevant glucose concentration changes in pigs. Journal of Infrared, Millimeter, and Terahertz Waves, 2018, 39.8: 761-772.
+
+\bibitem{Husan} HU, Shizhen; NAGAE, Seko; HIROSE, Akira. Millimeter-wave adaptive glucose concentration estimation with complex-valued neural networks. IEEE Transactions on Biomedical Engineering, 2018, 66.7: 2065-2071.
+
+\bibitem{trans} CANO-GARCIA, Helena, et al. Detection of glucose variability in saline solutions from transmission and reflection measurements using V-band waveguides. Measurement Science and Technology, 2015, 26.12: 125701.
+
+\bibitem{CVNN} HIROSE, Akira. Complex-valued neural networks. Springer Science \& Business Media, 2012.
+
+\bibitem{Nagaesan} 長江 セコウ　3ポート誘電体装荷導波管プローブとそれを利用した非侵襲型ミリ波血糖値推定システム　東京大学大学院工学系研究科バイオエンジニアリング専攻修士論文 2021
+
+\bibitem{parkes} PARKES, Joan L., et al. A new consensus error grid to evaluate the clinical significance of inaccuracies in the measurement of blood glucose. Diabetes care, 2000, 23.8: 1143-1148.
+
+\bibitem{parkes area} PFÜTZNER, Andreas, et al. Technical aspects of the Parkes error grid. Journal of Diabetes Science and Technology, 2013, 7.5: 1275-1281.
+
+\end{thebibliography}
+\addcontentsline{toc}{section}{参考文献}
+\end{document}

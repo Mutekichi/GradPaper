@@ -1,0 +1,58 @@
+\begin{thebibliography}{10}
+
+\bibitem{landmine_example}
+T.~Montoya and G.~Smith, ``Land mine detection using a ground-penetrating radar
+  based on resistively loaded vee dipoles,'' {\em IEEE Transactions on Antennas
+  and Propagation}, vol.~47, no.~12, pp.~1795--1806, 1999.
+
+\bibitem{remains_example}
+J.~J. Schultz, M.~Grasmueck, R.~Weger, N.~Muztaza, M.~Saidin, I.~Azwin,
+  R.~Saad, H.~Kofun, and G.~Leucci, ``Detecting buried remains using
+  ground-penetrating radar,'' {\em Department of}, 2012.
+
+\bibitem{landmine_CNN}
+C.-C. Yang and N.~Bose, ``Landmine detection and classification with
+  complex-valued hybrid neural network using scattering parameters dataset,''
+  {\em IEEE transactions on neural networks}, vol.~16, no.~3, pp.~743--753,
+  2005.
+
+\bibitem{hidden_Markov}
+S.~E. Yuksel, J.~Bolton, and P.~Gader, ``Multiple-instance hidden markov models
+  with applications to landmine detection,'' {\em IEEE Transactions on
+  Geoscience and Remote Sensing}, vol.~53, no.~12, pp.~6766--6775, 2015.
+
+\bibitem{stepped_frequency_continuous_wave}
+T.~Kido, Y.~Yokota, F.~Kawahara, and M.~Sato, ``Wide band stepped-frequency
+  ground penetrating radar,'' in {\em 2011 IEEE International Geoscience and
+  Remote Sensing Symposium}, pp.~55--58, 2011.
+
+\bibitem{STFW_Kido}
+城戸隆 and 佐藤源之, ``広帯域連続波周波数掃引型地中レーダ,'' {\em 物理探査},
+  vol.~69, no.~4, pp.~269--279, 2016.
+
+\bibitem{prestack_migration}
+X.~Feng and M.~Sato, ``Pre-stack migration applied to gpr for landmine
+  detection,'' {\em Inverse Problems}, vol.~20, p.~S99, nov 2004.
+
+\bibitem{gpr_migration}
+T.~Tamura, K.~Watanabe, and Y.~Saito, ``Subsurface imaging by the ground
+  penetrating radar,'' 2004.
+
+\bibitem{CVNN}
+A.~Hirose, {\em Complex-valued neural networks}, vol.~400.
+\newblock Springer Science \& Business Media, 2012.
+
+\bibitem{absorbing_material}
+Z.~Xiao, J.~He, and P.~Liu, ``Study of a planar spiral antenna used in ground
+  penetrating radar system,'' in {\em 2008 China-Japan Joint Microwave
+  Conference}, pp.~250--252, 2008.
+
+\bibitem{ground_microstrip_line}
+E.~O. Hammerstad, ``Equations for microstrip circuit design,'' in {\em 1975 5th
+  European Microwave Conference}, pp.~268--272, 1975.
+
+\bibitem{pair_microstrip_line}
+B.~C. Wadell, {\em Transmission line design handbook}.
+\newblock The Artech House microwave library, Artech House, 1991.
+
+\end{thebibliography}
