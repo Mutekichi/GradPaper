@@ -177,15 +177,20 @@
 
     ニューラルネットワークにおける学習の際に正解となる信号（教師信号）が与えられる学習を教師あり学習という。教師信号と出力の誤差を出力層からより前段の層に向けて逆向きに伝搬させ
     層間の荷重の更新を行う誤差逆伝搬法が代表的である。
-    ここで、複素数に対する誤差関数としては、例えば、
+    実数ニューラルネットワークにおける学習方法としては
+    \begin{equation}
+      w_{nm} \leftarrow w_{nm} - lr \frac{\partial E}{\partial w_{nm}}
+    \end{equation}
+    のように、誤差関数の勾配を用いて荷重の更新を行う。ここで、$lr$は学習率、$E$は誤差関数である。
+
+    複素数に対する誤差関数としては、例えば、
     \begin{equation}\label{error_function}
       E(\bm{t}, \bm{y})  & = \frac{1}{2}|\bm{t} - \bm{y}|^2\\
       & = \frac{1}{2}\sum_{i=1}^{N}|\bm{t}_i - \bm{y}_i|^2
     \end{equation}
     が用いられる。ここで、$\bm{t}$は教師信号、$\bm{y}$は出力信号である。
-    複素ニューラルネットワークにおける学習において、
+    複素ニューラルネットワークにおける学習においては、
     活性化関数として式\ref{activation_function}を、誤差関数として式\ref{error_function}を用いた場合、
-
     \begin{equation}
       \label{eq:update_a}
       \begin{split}
