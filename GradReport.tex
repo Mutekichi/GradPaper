@@ -543,13 +543,19 @@
     acc_{c} = \frac{n(\{x \in S \, \mid\, PredClass(x) = LabeledClass(x)\})}{n(S)},
   \end{equation} %TODO: 修正
 
-  で定義される正解率を用いて評価した。また、回帰型の教師データの場合には、
+  で定義される正解率を用いて評価した。ここで、
 
   \begin{equation}
-    \Delta\theta = |\theta_{out}(x) - \theta_{t}(x)| ( 0 \le \Delta\theta \le 90^{\circ})
+    PredClass_{c} = \mathrm{arg}\max_{i} |y(\mathbf{x}) - \mathbf{t}_i|
+  \end{equation} %TODO: 修正
+  
+  また、回帰型の教師データの場合には、
+
+  \begin{equation}
+    \Delta\theta = |\theta_{out}(x) - \theta_{t}(x)| =  |\mathrm{arg}\{y(x)\}- \theta_{t}(x)| ( 0 \le \Delta\theta \le 90^{\circ})
   \end{equation} %TODO: 修正
 
-  で定義される位相差と、これを用いて
+  で定義される出力と教師データの位相差と、これを用いて
 
   \begin{equation}
     acc_{r} = \frac{n(\{x \in S \, \mid\, \Delta\theta < 5^{\circ}\})}{n(S)}
@@ -576,8 +582,7 @@
 
 \section{結果}
   各条件における、誤差関数の値の推移を図\ref{}-\ref{}に示す。また、教師データの与え方としてCircularラベルを用いた場合については、
-
-
+  エポックごとの出力と教師データの位相差の推移を図\ref{}に示す。
 
   \clearpage
   \begin{figure}[tbp]
@@ -631,6 +636,7 @@
       \includegraphics[keepaspectratio, width=80mm]{Images/python/acc_202402052233.png}
       \subcaption{入力: $S^H_{21} / S^V_{21}$}
     \end{minipage}
+    \caption{One-Hotラベルを用いた場合の正解率の推移}
   \end{figure}
   \begin{figure}[tbp]
     \begin{minipage}[b]{0.5\textwidth}
@@ -643,6 +649,7 @@
       \includegraphics[keepaspectratio, width=80mm]{Images/python/acc_202402052150.png}
       \subcaption{入力: $S^H_{21} / S^V_{21}$}
     \end{minipage}
+    \caption{Softラベルを用いた場合の正解率の推移}
   \end{figure}
   \begin{figure}[tbp]
     \begin{minipage}[b]{0.5\textwidth}
@@ -655,8 +662,22 @@
       \includegraphics[keepaspectratio, width=80mm]{Images/python/accuracy_202402052149.png}
       \subcaption{入力: $S^H_{21} / S^V_{21}$}
     \end{minipage}
+    \caption{Circularラベルを用いた場合の擬似正解率の推移}
   \end{figure}
   \clearpage
+  \begin{figure}[tbp]
+    \begin{minipage}[b]{0.5\textwidth}
+      \centering
+      \includegraphics[keepaspectratio, width=80mm]{Images/python/avg_202402052108.png}
+      \subcaption{入力: $S^H_{21}$}
+    \end{minipage}
+    \begin{minipage}[b]{0.5\textwidth}
+      \centering
+      \includegraphics[keepaspectratio, width=80mm]{Images/python/avg_202402052149.png}
+      \subcaption{入力: $S^H_{21} / S^V_{21}$}
+    \end{minipage}
+  \end{figure}
+  \caption{Circularラベルを用いた場合の出力の位相と教師ラベルの位相の差の推移}
 \section{考察}
 
   
