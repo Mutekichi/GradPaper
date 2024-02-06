@@ -56,7 +56,7 @@
 % \pagestyle{plain}
 \makeatletter
  
-\def\@thesis{2023年度　卒業論文中間報告書}
+\def\@thesis{2023年度　卒業論文}
 \def\teacher#1{\def\@teacher{#1}}
 \def\department#1{\def\@department{#1}}
 \def\id#1{\def\@id{#1}}
@@ -82,10 +82,10 @@
 
 \makeatother
 
-\title{複素ニューラルネットワークを用いた\\円偏波地中レーダシステム}
+\title{円偏波を用いる適応的\\二重偏波地中レーダシステム}
 \teacher{廣瀬　明　教授\\
 		\qquad \qquad \qquad 夏秋　嶺　准教授}
-\date{2023年 9月29日}
+\date{2023年 2月7日}
 \department{東京大学　工学部　電気電子工学科}
 \id{03-220524}
 \author{渡辺　裕貴}
@@ -144,12 +144,12 @@
 
     \begin{figure}[tbp]
       \centering
-      \begin{minipage}[b]{0.5\textwidth}
+      \begin{minipage}[b]{0.495\textwidth}
         \centering
         \includegraphics[keepaspectratio, width=70mm]{Images/SFCW_Kido.png}
         \subcaption{STFW}\label{SFCW_Kido}
       \end{minipage}
-      \begin{minipage}[b]{0.5\textwidth}
+      \begin{minipage}[b]{0.495\textwidth}
         \centering
         \includegraphics[keepaspectratio, width=70mm]{Images/pulse_Kido.png}
         \subcaption{パルス型}\label{pulse_Kido}
@@ -250,13 +250,13 @@
 
     \begin{figure}
       \begin{tabular}{cc}
-          \begin{minipage}{.5\textwidth}
+          \begin{minipage}{.4\textwidth}
               \centering
               \includegraphics[width=1.0\linewidth]{Images/hadaka.png}
               \caption{バランを接続した送信アンテナ}
               \label{fig:hadaka}
           \end{minipage}
-          \begin{minipage}{.5\textwidth}
+          \begin{minipage}{.6\textwidth}
               \centering
               \includegraphics[width=1.0\linewidth]{Images/oh-ware.png}
               \caption{図\ref{fig:hadaka}を電磁波吸収体で覆ったもの}
@@ -266,13 +266,13 @@
     \end{figure}
     \begin{figure}
       \begin{tabular}{cc}
-          \begin{minipage}{.5\textwidth}
+          \begin{minipage}{.4\textwidth}
               \centering
               \includegraphics[width=1.0\linewidth]{Images/hoiruyaki.png}
               \caption{図\ref{fig:oh-ware}をアルミニウム箔で覆ったもの}
               \label{fig:hoiruyaki}
           \end{minipage}
-          \begin{minipage}{.5\textwidth}
+          \begin{minipage}{.6\textwidth}
               \centering
               \includegraphics[width=1.0\linewidth]{Images/overview.png}
               \caption{計測システムの全体像}
@@ -286,7 +286,7 @@
   \subsection{複素ニューラルネットワークを用いた解析システム}
 
     測定システムにより得られた入出力ポート間の伝送係数の複素数データを、複素ニューラルネットワークを用いて解析する。
-    解析に用いる複素ニューラルネットワークの構成の詳細は \label{sec:analysis} 節で述べる。
+    解析に用いる複素ニューラルネットワークの構成の詳細は \ref{sec:analysis} 節で述べる。
     本研究では、計測データから抽出する特徴量として単純なものとして、埋設パイプの角度を推定することを目標としている。
 
 \section{実験}
@@ -307,20 +307,20 @@
   バランに関して、誘電体基盤は厚さ1mm、比誘電率4.6として設計した。図\ref{fig:taper_balun_configuration}において、緑色部分は誘電体基盤を、灰色部分は
   プリント導体を表している。
 
-  \begin{figure}[hbtp]
-    \centering
-    \includegraphics[keepaspectratio, width=110mm]{Images/spiral_antenna_configuration.png}
-    \caption{設計したスパイラルアンテナの構造}
-    \label{fig:spiral_antenna_configuration}
-  \end{figure}
+  % \begin{figure}[hbtp]
+  %   \centering
+  %   \includegraphics[keepaspectratio, width=110mm]{Images/spiral_antenna_configuration.png}
+  %   \caption{設計したスパイラルアンテナの構造}
+  %   \label{fig:spiral_antenna_configuration}
+  % \end{figure}
 
   \begin{figure}[tbp]
-    \begin{minipage}[b]{0.5\textwidth}
+    \begin{minipage}[b]{0.495\textwidth}
       \centering
       \includegraphics[keepaspectratio, width=75mm]{Images/spiral_antenna_configuration.png}
       \subcaption{上面図}
     \end{minipage}
-    \begin{minipage}[b]{0.5\textwidth}
+    \begin{minipage}[b]{0.495\textwidth}
       \centering
       \includegraphics[keepaspectratio, width=75mm]{Images/spiral_withoutcord.png}
       \subcaption{座標系の設定}
@@ -329,14 +329,14 @@
 
   \begin{figure}[tbp]
     \centering
-    \begin{minipage}[b]{0.5\textwidth}
+    \begin{minipage}[b]{0.495\textwidth}
       \centering
-      \includegraphics[keepaspectratio, width=75mm]{Images/taper_balun_top.png}
+      \includegraphics[keepaspectratio, width=70mm]{Images/taper_balun_top.png}
       \subcaption{下面図}
     \end{minipage}
-    \begin{minipage}[b]{0.5\textwidth}
+    \begin{minipage}[b]{0.495\textwidth}
       \centering
-      \includegraphics[keepaspectratio, width=75mm]{Images/taper_balun_bottom.png}
+      \includegraphics[keepaspectratio, width=70mm]{Images/taper_balun_bottom.png}
       \subcaption{上面図}
     \end{minipage}
     \caption{バランの構造}\label{fig:taper_balun_configuration}
@@ -365,18 +365,17 @@
   単純なペアマイクロストリップラインでは特性インピーダンスに周波数依存性を持たせるのが困難であるため、特性インピーダンスが$160\Omega$程度となるよう、文献\cite{pair_microstrip_line}
   を参考に$w_{\mathrm{out}} = 0.2\mathrm{mm}$とした。
 
-  \clearpage
   % https://3g-aerial.biz/en/online-calculations/other-calculations/pair-stripline-characteristic-impedance-calculator
   \begin{figure}[tbp]
     \centering
-    \begin{minipage}[b]{0.5\textwidth}
+    \begin{minipage}[b]{0.495\textwidth}
       \centering
-      \includegraphics[keepaspectratio, width=80mm]{Images/rad_pattern_far.png}
+      \includegraphics[keepaspectratio, width=70mm]{Images/rad_pattern_far.png}
       \subcaption{遠方界}
     \end{minipage}
-    \begin{minipage}[b]{0.5\textwidth}
+    \begin{minipage}[b]{0.495\textwidth}
       \centering
-      \includegraphics[keepaspectratio, width=80mm]{Images/rad_pattern_near.png}
+      \includegraphics[keepaspectratio, width=70mm]{Images/rad_pattern_near.png}
       \subcaption{近傍界}
     \end{minipage}
     \caption{放射パターン(電界強度)の2次元プロット}\label{fig:radiation_pattern_2D}
@@ -387,24 +386,22 @@
     \caption{遠方界における放射パターン(dBi)の2次元プロット}
     \label{fig:radiation_pattern_lhcp}
   \end{figure}
-  \clearpage
 
-  \clearpage
   \begin{figure}[tbp]
     % \centering
-    \begin{minipage}[b]{0.49\textwidth}
+    \begin{minipage}[b]{0.495\textwidth}
       \centering
-      \includegraphics[keepaspectratio, width=80mm]{Images/near_E_2GHz.png}
+      \includegraphics[keepaspectratio, width=70mm]{Images/near_E_2GHz.png}
       \subcaption{2GHz}
     \end{minipage}
-    \begin{minipage}[b]{0.49\textwidth}
+    \begin{minipage}[b]{0.495\textwidth}
       \centering
-      \includegraphics[keepaspectratio, width=80mm]{Images/near_E_5GHz.png}
+      \includegraphics[keepaspectratio, width=70mm]{Images/near_E_5GHz.png}
       \subcaption{5GHz}
     \end{minipage}\\
-    \begin{minipage}[b]{0.49\textwidth}
+    \begin{minipage}[b]{0.495\textwidth}
       \centering
-      \includegraphics[keepaspectratio, width=80mm]{Images/near_E_10GHz.png}
+      \includegraphics[keepaspectratio, width=70mm]{Images/near_E_10GHz.png}
       \subcaption{10GHz}
     \end{minipage}
     \caption{放射パターンの3次元プロット}\label{fig:radiation_pattern_3D}
@@ -416,8 +413,6 @@
     \caption{設計したアンテナにおける軸比の周波数特性}
     \label{fig:axial_ratio}
   \end{figure}
-
-  \clearpage
 
   \begin{figure}[hbtp]
     \centering
@@ -456,28 +451,28 @@
   % \end{table}
 
   \begin{figure}[tbp]
-    \begin{minipage}[b]{0.5\textwidth}
+    \begin{minipage}{0.4\textwidth}
       \centering
-      \includegraphics[keepaspectratio, width=75mm]{Images/pipe.png}
+      \includegraphics[keepaspectratio, width=60mm]{Images/pipe.png}
       \subcaption{実験に用いた鉄パイプ}
       \label{fig:pipe}
     \end{minipage}
-    \begin{minipage}[b]{0.5\textwidth}
+    \begin{minipage}{0.6\textwidth}
       \centering
-      \includegraphics[keepaspectratio, width=75mm]{Images/msr_cond.png}
+      \includegraphics[keepaspectratio, width=90mm]{Images/msr_cond.png}
       \subcaption{測定点と鉄パイプの角度の定義}
       \label{fig:msr_cond}
     \end{minipage}
   \end{figure}
 
   \begin{figure}[tbp]
-    \begin{minipage}[b]{0.5\textwidth}
+    \begin{minipage}[b]{0.495\textwidth}
       \centering
       \includegraphics[keepaspectratio, width=75mm]{Images/sampleneko.png}
       \subcaption{送受信アンテナの配置の模式図}
       \label{fig:center_offset}
     \end{minipage}
-    \begin{minipage}[b]{0.5\textwidth}
+    \begin{minipage}[b]{0.495\textwidth}
       \centering
       \includegraphics[keepaspectratio, width=75mm]{Images/sampleneko.png}
       \subcaption{実際の測定範囲}
@@ -491,6 +486,57 @@
   地中レーダシステムによって得られたデータを、複素ニューラルネットワークを用いて解析した。ここでは、まず入力データの形式について述べ、
   その後に複素ニューラルネットワークの構成について述べる。
   \subsubsection{入力データの形式}
+  入力データの例はどこに貼る？
+
+  \begin{figure}[tbp]
+    \begin{minipage}[b]{0.495\textwidth}
+      \centering
+      \includegraphics[keepaspectratio, width=70mm]{Images/python/rowdata/30.png}
+      \subcaption{2.5GHz}
+    \end{minipage}
+    \begin{minipage}[b]{0.495\textwidth}
+      \centering
+      \includegraphics[keepaspectratio, width=70mm]{Images/python/rowdata/80.png}
+      \subcaption{7.5GHz}
+    \end{minipage}\\
+    \begin{minipage}[b]{0.495\textwidth}
+      \centering
+      \includegraphics[keepaspectratio, width=70mm]{Images/python/rowdata/130.png}
+      \subcaption{12.5GHz}
+    \end{minipage}
+    \begin{minipage}[b]{0.495\textwidth}
+      \centering
+      \includegraphics[keepaspectratio, width=70mm]{Images/python/rowdata/180.png}
+      \subcaption{17.5GHz}
+    \end{minipage}
+    \caption{パイプが$70^{\circ}$、受信アンテナの方向がHのときの各周波数における伝送係数}
+  \end{figure}
+
+  \begin{figure}[tbp]
+    \begin{minipage}[b]{0.495\textwidth}
+      \centering
+      \includegraphics[keepaspectratio, width=70mm]{Images/python/rowdata/30.png}
+      \subcaption{2.5GHz}
+    \end{minipage}
+    \begin{minipage}[b]{0.495\textwidth}
+      \centering
+      \includegraphics[keepaspectratio, width=70mm]{Images/python/rowdata/80.png}
+      \subcaption{7.5GHz}
+    \end{minipage}\\
+    \begin{minipage}[b]{0.495\textwidth}
+      \centering
+      \includegraphics[keepaspectratio, width=70mm]{Images/python/rowdata/130.png}
+      \subcaption{12.5GHz}
+    \end{minipage}
+    \begin{minipage}[b]{0.495\textwidth}
+      \centering
+      \includegraphics[keepaspectratio, width=70mm]{Images/python/rowdata/180.png}
+      \subcaption{17.5GHz}
+    \end{minipage}
+    \caption{パイプが$70^{\circ}$のときの、各アンテナの向きの間での伝送係数の振幅の比および位相差}
+  \end{figure}
+  
+
   本実験では、35×35の測定点に対し$S_{21}^{H}$をそのまま入力データとして用いるパターンと、H受信とV受信の間の伝送係数の比をとった
   $\cfrac{S_{21}^{H}}{S_{21}^{V}}$を入力データとして用いるパターンの2通りについて実験を行った。
 
@@ -498,46 +544,51 @@
   これらを0°、90°、180°、270°回転させ、さらにそれぞれについて画像を反転させたデータを用意した。
   これにより、1回の測定当たり25 * 4 * 2 = 200個のデータを得ることができる。したがって、データセットのサイズは、18 * 200 = 3600 個となる。
   このうち、2700個を学習データとし、残り900個をテストデータとした。
-
   
-  \subsubsection{入力データの形式}
+  \subsubsection{複素ニューラルネットワークの構成}
   本実験では、畳み込み層を1層、全結合層を1層とした複素ニューラルネットワークを用いた。
-  畳み込み層の層数は16とし、活性化関数には複素tanh関数を用いた。また、学習率については　のようにした。
+  畳み込み層の層数は16とし、活性化関数には複素tanh関数を用いた。
   教師データの与え方としては、次の3通りについて実験を行った。
-  \[
+  \begin{equation}\label{eq:onehot}
     \mathbf{v}_j =
     \begin{cases}
         1 & \text{if } j = i, \\
         0 & \text{otherwise}.
     \end{cases}
-  \]
-  \[
+  \end{equation}
+  \begin{equation}\label{eq:soft}
     \mathbf{v}_j =
     \begin{cases}
         1 & \text{if } j = i, \\
         0 & \text{if } j = i \pm 1 \text{ or } \{i, j\} = \{0, 17\}.\\
         -1 & \text{otherwise}.
     \end{cases}
-  \]
-  \[
+  \end{equation}
+  \begin{equation}\label{eq:circular}
     \mathbf{v}_j = e^{i\cdot2\theta}
-  \]
+  \end{equation}
   ここで、$\mathbf{v}_j$は教師データの$j$番目の要素を表し、$i$は、対象物の角度が0°の場合のクラスを0、10°の場合のクラスを1、...、170°の場合のクラスを17としたときの
   クラスの番号を表す。また、$\theta$は対象物の向きをラジアン表記したものを表す。
   1つ目の教師データの与え方は、対象物の向きをクラス分けしたものを教師データとして与えるものである。クラスの番号に一致する要素には1を、それ以外の要素には0を与える。
+  以下では、この教師データの与え方をOne-hot型の教師データと呼ぶ。
   2つ目の教師データの与え方は、クラス間の類似度に関して、角度が$\pm10^{\circ}$異なるクラス
   を正解に近いクラスとして評価し、クラスの番号に一致する要素には1を、 角度が$\pm10^{\circ}$異なるクラスの番号には0を、それ以外の要素には-1を与えるものである。
+  以下では、この教師データの与え方をSoft型の教師データと呼ぶ。
   3つ目の教師データの与え方は、対象物の角度推定を、分類問題ではなく、角度を数値として予測する回帰問題としてとらえ、対象物の向きを複素数として与えるものである。
-  パイプの向きは$\pm180^{\circ} = \pi$周期の周期性があるため、$\pi$の周期性を持つ複素数として$e^{i\cdot2\theta}$を与えている。
+  パイプの向きは$\pm180^{\circ} = \pi$周期の周期性があるため、$\pi$の周期性を持つ複素数として$e^{i\cdot2\theta}$を与えている。以下では、
+  この教師データの与え方をCircular型の教師データと呼ぶ。
 
-  ここで、1つ目および2つ目の教師データの与え方については、最終的な出力のニューロン数が18、3つ目の教師データの与え方の場合には、最終的な出力のニューロン数が1
+  ここで、One-hot型とSoft型の教師データの与え方については、最終的な出力のニューロン数が18、Circular型の教師データの与え方の場合には、最終的な出力のニューロン数が1
   となっている。これらの各ニューロンは、直前の畳み込み層の出力から、全結合層を経て出力される。すなわち、最終層の$i$番目のニューロンの出力$y_i$は、
   \[
-    \mathbf{v}_i = f(\sum_{j=1}^{16} \sum_{k=1}^{16} \mathbf{w}_{ijk} \cdot \mathbf{z}_{jk} + \mathbf{b}_i)
+    y_i = f(\sum_{k=1}^{16} w_{ki} u_k)
   \]
   となる。ニューラルネットワーク全体の構造としては、図\ref{fig:neuralnet}に示す通りのものとなる。(TODO: 改善)
-  学習の最適化には、SGDを用いた。(TODO: 引用)学習率は0.001、ミニバッチサイズは32、エポック数は20とした。学習の進行度は、誤差関数として用いている
+  学習の最適化には、ミニバッチSGDを用いた。(TODO: 引用)学習率は、$S_{21}^H$をそのまま入力として用いる場合には0.0015、$S_{21}^{H}/S_{21}^{V}$を入力として
+  用いる場合には0.0010とした。ミニバッチサイズは32、学習のエポック数は20とした。TO DO: 説明もっと書いたほうがいいかも
+  学習の進行度は、誤差関数として用いている
   平均二乗誤差に加え、分類型の教師データの場合には、
+  TODO: 数式もっとちゃんと書く
 
   \begin{equation}
     acc_{c} = \frac{n(\{x \in S \, \mid\, PredClass(x) = LabeledClass(x)\})}{n(S)},
@@ -574,7 +625,7 @@
 
   \begin{figure}[hbtp]
     \centering
-    \includegraphics[keepaspectratio, width=110mm]{Images/sampleneko.png}
+    \includegraphics[keepaspectratio, width=110mm]{Images/network.png}
     \caption{ニューラルネットワークの構造}
     \label{fig:neuralnet}
   \end{figure}
@@ -584,14 +635,16 @@
   各条件における、誤差関数の値の推移を図\ref{}-\ref{}に示す。また、教師データの与え方としてCircularラベルを用いた場合については、
   エポックごとの出力と教師データの位相差の推移を図\ref{}に示す。
 
+  どのくらい結果を説明する？
+
   \clearpage
   \begin{figure}[tbp]
-    \begin{minipage}[b]{0.5\textwidth}
+    \begin{minipage}[b]{0.495\textwidth}
       \centering
       \includegraphics[keepaspectratio, width=75mm]{Images/python/loss_202402051754.png}
       \subcaption{入力: $S^H_{21}$}
     \end{minipage}
-    \begin{minipage}[b]{0.5\textwidth}
+    \begin{minipage}[b]{0.495\textwidth}
       \centering
       \includegraphics[keepaspectratio, width=75mm]{Images/python/loss_202402052233.png}
       \subcaption{入力: $S^H_{21} / S^V_{21}$}
@@ -599,12 +652,12 @@
     \caption{One-Hotラベルを用いた場合の誤差関数の推移}
   \end{figure}
   \begin{figure}[tbp]
-    \begin{minipage}[b]{0.5\textwidth}
+    \begin{minipage}[b]{0.495\textwidth}
       \centering
       \includegraphics[keepaspectratio, width=75mm]{Images/python/loss_202402051931.png}
       \subcaption{入力: $S^H_{21}$}
     \end{minipage}
-    \begin{minipage}[b]{0.5\textwidth}
+    \begin{minipage}[b]{0.495\textwidth}
       \centering
       \includegraphics[keepaspectratio, width=75mm]{Images/python/loss_202402052150.png}
       \subcaption{入力: $S^H_{21} / S^V_{21}$}
@@ -612,12 +665,12 @@
     \caption{Softラベルを用いた場合の誤差関数の推移}
   \end{figure}
   \begin{figure}[tbp]
-    \begin{minipage}[b]{0.5\textwidth}
+    \begin{minipage}[b]{0.495\textwidth}
       \centering
       \includegraphics[keepaspectratio, width=75mm]{Images/python/loss_202402052108.png}
       \subcaption{入力: $S^H_{21}$}
     \end{minipage}
-    \begin{minipage}[b]{0.5\textwidth}
+    \begin{minipage}[b]{0.495\textwidth}
       \centering
       \includegraphics[keepaspectratio, width=75mm]{Images/python/loss_202402052149.png}
       \subcaption{入力: $S^H_{21} / S^V_{21}$}
@@ -626,12 +679,12 @@
   \end{figure}
   \clearpage
   \begin{figure}[tbp]
-    \begin{minipage}[b]{0.5\textwidth}
+    \begin{minipage}[b]{0.495\textwidth}
       \centering
       \includegraphics[keepaspectratio, width=80mm]{Images/python/acc_202402051754.png}
       \subcaption{入力: $S^H_{21}$}
     \end{minipage}
-    \begin{minipage}[b]{0.5\textwidth}
+    \begin{minipage}[b]{0.495\textwidth}
       \centering
       \includegraphics[keepaspectratio, width=80mm]{Images/python/acc_202402052233.png}
       \subcaption{入力: $S^H_{21} / S^V_{21}$}
@@ -639,12 +692,12 @@
     \caption{One-Hotラベルを用いた場合の正解率の推移}
   \end{figure}
   \begin{figure}[tbp]
-    \begin{minipage}[b]{0.5\textwidth}
+    \begin{minipage}[b]{0.495\textwidth}
       \centering
       \includegraphics[keepaspectratio, width=80mm]{Images/python/acc_202402051931.png}
       \subcaption{入力: $S^H_{21}$}
     \end{minipage}
-    \begin{minipage}[b]{0.5\textwidth}
+    \begin{minipage}[b]{0.495\textwidth}
       \centering
       \includegraphics[keepaspectratio, width=80mm]{Images/python/acc_202402052150.png}
       \subcaption{入力: $S^H_{21} / S^V_{21}$}
@@ -652,12 +705,12 @@
     \caption{Softラベルを用いた場合の正解率の推移}
   \end{figure}
   \begin{figure}[tbp]
-    \begin{minipage}[b]{0.5\textwidth}
+    \begin{minipage}[b]{0.495\textwidth}
       \centering
       \includegraphics[keepaspectratio, width=80mm]{Images/python/accuracy_202402052108.png}
       \subcaption{入力: $S^H_{21}$}
     \end{minipage}
-    \begin{minipage}[b]{0.5\textwidth}
+    \begin{minipage}[b]{0.495\textwidth}
       \centering
       \includegraphics[keepaspectratio, width=80mm]{Images/python/accuracy_202402052149.png}
       \subcaption{入力: $S^H_{21} / S^V_{21}$}
@@ -666,24 +719,31 @@
   \end{figure}
   \clearpage
   \begin{figure}[tbp]
-    \begin{minipage}[b]{0.5\textwidth}
+    \begin{minipage}[b]{0.495\textwidth}
       \centering
       \includegraphics[keepaspectratio, width=80mm]{Images/python/avg_202402052108.png}
       \subcaption{入力: $S^H_{21}$}
     \end{minipage}
-    \begin{minipage}[b]{0.5\textwidth}
+    \begin{minipage}[b]{0.495\textwidth}
       \centering
       \includegraphics[keepaspectratio, width=80mm]{Images/python/avg_202402052149.png}
       \subcaption{入力: $S^H_{21} / S^V_{21}$}
     \end{minipage}
+    \caption{Circularラベルを用いた場合の出力の位相と教師ラベルの位相の差の推移}
   \end{figure}
-  \caption{Circularラベルを用いた場合の出力の位相と教師ラベルの位相の差の推移}
 \section{考察}
+  まず、One-Hotラベルを用いた場合について、誤差関数の値が0.06程度に収束している、また、正解率についても途中から減少している。このことは、
+  出力のニューロンが全て$0 + 0i$に収束してしまっていることを示唆している。これは、One-Hotラベルを用いた場合には、出力のニューロンのみを
+  $1 + 0i$に近づけ、それ以外のニューロンを$0 + 0i$に近づけるようにうまく学習するよりも、最終的な結合荷重の重みを0にすることで全ての出力ニューロン
+  を$0 + 0i$に収束させる方が、誤差関数の値を小さくすることができる（とニューラルネットワークが”判断”した TODO: 表現）ためであると考えられる。
+  しかし、結合荷重が0に収束する前に早い段階で学習を打ち切ることで、一定の正解率を得ることができる可能性はある。
+  また、Softラベルを用いた場合については、誤差関数の
 
-  
 \section{今後の課題}
-
-
+  がんばります
+\newpage
+\section{謝辞}
+  ありがとうございました
 \bibliographystyle{ieeetr}
 \bibliography{refs}
 
