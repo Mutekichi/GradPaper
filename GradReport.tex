@@ -203,7 +203,8 @@
     \begin{equation}
       w_{nm} \leftarrow w_{nm} - \eta \frac{\partial E}{\partial w_{nm}}
     \end{equation}
-    のように、誤差関数の勾配を用いて荷重の更新を行う。ここで、$\eta$は学習率、$E$は誤差関数である。
+    のように、誤差関数の勾配を用いて荷重の更新を行う。ここで、$w_{nm}$は入力の$n$番目のニューロンと出力の$l$番目のニューロン
+    の間の結合荷重であり、$\eta$は学習率、$E$は誤差関数である。
 
     複素数に対する誤差関数としては、例えば、
     \begin{equation}\label{error_function}
@@ -212,7 +213,7 @@
       & = \frac{1}{2}\sum_{i=1}^{N}|\bm{t}_i - \bm{y}_i|^2
       \end{split}
     \end{equation}
-    が用いられる。ここで、$\bm{t}$は教師信号、$\bm{y}$は出力信号である。
+    が用いられる。ここで、$\bm{t}$は教師ラベル、$\bm{y}$は出力ニューロン、$N$は出力のニューロン数である。
     複素ニューラルネットワークにおける学習においては、
     活性化関数として式\ref{activation_function}を、誤差関数として式\ref{error_function}を用いた場合、
     \begin{equation}
@@ -233,8 +234,9 @@
       \label{eq:rot}
         \theta^{\mathrm{rot}}_{nm} = \angle x_{l\, n} - \angle x_{l-1\, m} -\angle w_{nm}
     \end{equation}
-
-    に従って振幅、位相ごとに荷重の更新を行うことで、誤差関数を小さくする方向に学習を進めることができる。\cite{CVNN}
+    に従って振幅、位相ごとに荷重の更新を行うことで、誤差関数を小さくする方向に学習を進めることができる。ここで、
+    ここで、$\eta^\mathrm{a}$、$\eta^\mathrm{p}$はそれぞれ振幅、位相の学習率である。
+    \cite{CVNN}
 
 \section{複素ニューラルネットワークを用いた円偏波地中レーダシステム}
 
@@ -265,8 +267,8 @@
 
     \begin{figure}[hbtp]
       \centering
-      \includegraphics[keepaspectratio, width=10mm]{Images/rxantenna.png}
-      \caption{計測システムの概略図}\label{fig:rxantenna}
+      \includegraphics[keepaspectratio, width=100mm]{Images/rxantenna.png}
+      \caption{テーパスロットアンテナ}\label{fig:rxantenna}
     \end{figure}
 
     \begin{figure}[hbtp]
@@ -364,7 +366,7 @@
     \end{minipage}
     \begin{minipage}[b]{0.495\textwidth}
       \centering
-      \includegraphics[keepaspectratio, width=75mm]{Images/spiral_withoutcord.png}
+      \includegraphics[keepaspectratio, width=75mm]{Images/spiral_withcord.png}
       \subcaption{座標系の設定}
     \end{minipage}
   \end{figure}
@@ -408,46 +410,49 @@
   を参考に$w_{\mathrm{out}} = 0.2\mathrm{mm}$とした。
 
   % https://3g-aerial.biz/en/online-calculations/other-calculations/pair-stripline-characteristic-impedance-calculator
+  \clearpage
   \begin{figure}[tbp]
     \centering
-    \begin{minipage}[b]{0.495\textwidth}
+    \begin{minipage}[b]{0.995\textwidth}
       \centering
-      \includegraphics[keepaspectratio, width=70mm]{Images/rad_pattern_far.png}
+      \includegraphics[keepaspectratio, width=100mm]{Images/rad_pattern_far.png}
       \subcaption{遠方界}
-    \end{minipage}
-    \begin{minipage}[b]{0.495\textwidth}
+    \end{minipage}\\
+    \begin{minipage}[b]{0.995\textwidth}
       \centering
-      \includegraphics[keepaspectratio, width=70mm]{Images/rad_pattern_near.png}
+      \includegraphics[keepaspectratio, width=100mm]{Images/rad_pattern_near.png}
       \subcaption{近傍界}
     \end{minipage}
-    \caption{放射パターン(電界強度)の2次元プロット}\label{fig:radiation_pattern_2D}
+    \caption{放射パターン(電界強度)の2次元プロット($\varphi = 0^\circ$)}\label{fig:radiation_pattern_2D}
   \end{figure}
   \begin{figure}[hbtp]
     \centering
     \includegraphics[keepaspectratio, width=100mm]{Images/radiation_pattern_lhcp.png}
-    \caption{遠方界における放射パターン(dBi)の2次元プロット}
+    \caption{遠方界における放射パターン(dBi)の2次元プロット($\varphi = 0^\circ$)}
     \label{fig:radiation_pattern_lhcp}
   \end{figure}
 
+  \clearpage
   \begin{figure}[tbp]
     % \centering
-    \begin{minipage}[b]{0.495\textwidth}
+    \begin{minipage}[b]{0.995\textwidth}
       \centering
-      \includegraphics[keepaspectratio, width=70mm]{Images/near_E_2GHz.png}
+      \includegraphics[keepaspectratio, width=100mm]{Images/near_E_2GHz.png}
       \subcaption{2GHz}
-    \end{minipage}
-    \begin{minipage}[b]{0.495\textwidth}
+    \end{minipage}\\
+    \begin{minipage}[b]{0.995\textwidth}
       \centering
-      \includegraphics[keepaspectratio, width=70mm]{Images/near_E_5GHz.png}
+      \includegraphics[keepaspectratio, width=100mm]{Images/near_E_5GHz.png}
       \subcaption{5GHz}
     \end{minipage}\\
-    \begin{minipage}[b]{0.495\textwidth}
+    \begin{minipage}[b]{0.995\textwidth}
       \centering
-      \includegraphics[keepaspectratio, width=70mm]{Images/near_E_10GHz.png}
+      \includegraphics[keepaspectratio, width=100mm]{Images/near_E_10GHz.png}
       \subcaption{10GHz}
     \end{minipage}
     \caption{放射パターンの3次元プロット}\label{fig:radiation_pattern_3D}
   \end{figure}
+  \clearpage
 
   \begin{figure}[hbtp]
     \centering
@@ -508,15 +513,15 @@
   \end{figure}
 
   \begin{figure}[tbp]
-    \begin{minipage}[b]{0.495\textwidth}
+    \begin{minipage}[b]{0.395\textwidth}
       \centering
-      \includegraphics[keepaspectratio, width=75mm]{Images/sampleneko.png}
+      \includegraphics[keepaspectratio, width=75mm]{Images/antenna_pos.png}
       \subcaption{送受信アンテナの配置の模式図}
       \label{fig:center_offset}
     \end{minipage}
-    \begin{minipage}[b]{0.495\textwidth}
+    \begin{minipage}[b]{0.595\textwidth}
       \centering
-      \includegraphics[keepaspectratio, width=75mm]{Images/sampleneko.png}
+      \includegraphics[keepaspectratio, width=75mm]{Images/offset.png}
       \subcaption{実際の測定範囲}
       \label{fig:actual_msr_range}
     \end{minipage}
@@ -530,51 +535,51 @@
   \subsubsection{入力データの形式}
 
   \begin{figure}[tbp]
-    \begin{minipage}[b]{0.495\textwidth}
+    \begin{minipage}[b]{0.995\textwidth}
       \centering
-      \includegraphics[keepaspectratio, width=70mm]{Images/python/rowdata/30.png}
-      \subcaption{2.5GHz}
-    \end{minipage}
-    \begin{minipage}[b]{0.495\textwidth}
-      \centering
-      \includegraphics[keepaspectratio, width=70mm]{Images/python/rowdata/80.png}
-      \subcaption{7.5GHz}
+      \includegraphics[keepaspectratio, width=140mm]{Images/python/yokonarabe/019/50.png}
+      \subcaption{4.0GHz}
     \end{minipage}\\
-    \begin{minipage}[b]{0.495\textwidth}
+    \begin{minipage}[b]{0.995\textwidth}
       \centering
-      \includegraphics[keepaspectratio, width=70mm]{Images/python/rowdata/130.png}
-      \subcaption{12.5GHz}
-    \end{minipage}
-    \begin{minipage}[b]{0.495\textwidth}
+      \includegraphics[keepaspectratio, width=140mm]{Images/python/yokonarabe/019/90.png}
+      \subcaption{6.0GHz}
+    \end{minipage}\\
+    \begin{minipage}[b]{0.995\textwidth}
       \centering
-      \includegraphics[keepaspectratio, width=70mm]{Images/python/rowdata/180.png}
-      \subcaption{17.5GHz}
+      \includegraphics[keepaspectratio, width=140mm]{Images/python/yokonarabe/019/130.png}
+      \subcaption{8.0GHz}
+    \end{minipage}\\
+    \begin{minipage}[b]{0.995\textwidth}
+      \centering
+      \includegraphics[keepaspectratio, width=140mm]{Images/python/yokonarabe/019/170.png}
+      \subcaption{10.0GHz}
     \end{minipage}
-    \caption{パイプが$70^{\circ}$、受信アンテナの方向がHのときの各周波数における$S_{21}$}
+    \caption{パイプの向きが$70^{\circ}$、受信アンテナの方向がHのときの各周波数における$S_{21}$}
   \end{figure}
 
   \begin{figure}[tbp]
-    \begin{minipage}[b]{0.495\textwidth}
+    \begin{minipage}[b]{0.995\textwidth}
       \centering
-      \includegraphics[keepaspectratio, width=70mm]{Images/python/rowdata/30.png}
-      \subcaption{2.5GHz}
-    \end{minipage}
-    \begin{minipage}[b]{0.495\textwidth}
-      \centering
-      \includegraphics[keepaspectratio, width=70mm]{Images/python/rowdata/80.png}
-      \subcaption{7.5GHz}
+      \includegraphics[keepaspectratio, width=140mm]{Images/python/yokonarabe/diff/processed/50.png}
+      \subcaption{4.0GHz}
     \end{minipage}\\
-    \begin{minipage}[b]{0.495\textwidth}
+    \begin{minipage}[b]{0.995\textwidth}
       \centering
-      \includegraphics[keepaspectratio, width=70mm]{Images/python/rowdata/130.png}
-      \subcaption{12.5GHz}
-    \end{minipage}
-    \begin{minipage}[b]{0.495\textwidth}
+      \includegraphics[keepaspectratio, width=140mm]{Images/python/yokonarabe/diff/processed/90.png}
+      \subcaption{6.0GHz}
+    \end{minipage}\\
+    \begin{minipage}[b]{0.995\textwidth}
       \centering
-      \includegraphics[keepaspectratio, width=70mm]{Images/python/rowdata/180.png}
-      \subcaption{17.5GHz}
+      \includegraphics[keepaspectratio, width=140mm]{Images/python/yokonarabe/diff/processed/130.png}
+      \subcaption{8.0GHz}
+    \end{minipage}\\
+    \begin{minipage}[b]{0.995\textwidth}
+      \centering
+      \includegraphics[keepaspectratio, width=140mm]{Images/python/yokonarabe/diff/processed/170.png}
+      \subcaption{10.0GHz}
     \end{minipage}
-    \caption{パイプが$70^{\circ}$のときの、各アンテナの向きの間での$S_{21}$の振幅の比および位相差}
+    \caption{パイプがの向き$70^{\circ}$のときの、$S_{21}^{H}$と$S_{21}^{V}$の振幅比および位相差}
   \end{figure}
   
 
