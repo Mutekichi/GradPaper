@@ -97,7 +97,7 @@
 \newpage
 \section{序論}
 
-  \subsection{背景}
+  \subsection{背景}\label{sec:background}
 
   地中レーダによる計測は、地中に向けて電磁波を放射し、地中の埋設物から散乱された電磁波を受信することで、非破壊的に地中埋設物を探査する方法
   である。地雷検出や遺跡調査、インフラ整備のためのパイプの検知など、多くの分野に応用されている\cite{landmine_example}\cite{remains_example}。
@@ -125,7 +125,7 @@
   が行われることもあり、その有効性が示されつつある\cite{landmine_CNN}\cite{hidden_Markov}。特に、複素数を入出力とする複素ニューラルネットワークを用いる
   場合、電磁波の位相についての情報も含めて解析を行うことができるため、地中レーダにおいては有効な手法であると考えられる。
 
-  \subsection{目的}
+  \subsection{目的}\label{sec:purpose}
 
   地中レーダによる計測における課題の一つに、計測にかかる長い時間がかかることが挙げられる。特にフルポラリメトリックな地中レーダシステムを用いる場合、
   地中の対象物の散乱特性について多くの情報を得ることができるメリットがある一方で、送受信アンテナの偏波を切り替える必要があるため、計測に
@@ -142,7 +142,7 @@
   短時間で、かつ、所望の特徴量のみを抽出することが可能となることが期待される。
 
 
-\section{関連研究}
+\section{関連事項}
 
   \subsection{地中レーダにおけるデータの処理}
 
@@ -201,9 +201,10 @@
     層間の荷重の更新を行う誤差逆伝搬法が代表的である。
     実数ニューラルネットワークにおける学習方法としては
     \begin{equation}
-      w_{nm} \leftarrow w_{nm} - lr \frac{\partial E}{\partial w_{nm}}
+      w_{nm} \leftarrow w_{nm} - \eta \frac{\partial E}{\partial w_{nm}}
     \end{equation}
-    のように、誤差関数の勾配を用いて荷重の更新を行う。ここで、$lr$は学習率、$E$は誤差関数である。
+    のように、誤差関数の勾配を用いて荷重の更新を行う。ここで、$w_{nm}$は入力の$n$番目のニューロンと出力の$l$番目のニューロン
+    の間の結合荷重であり、$\eta$は学習率、$E$は誤差関数である。
 
     複素数に対する誤差関数としては、例えば、
     \begin{equation}\label{error_function}
@@ -212,20 +213,20 @@
       & = \frac{1}{2}\sum_{i=1}^{N}|\bm{t}_i - \bm{y}_i|^2
       \end{split}
     \end{equation}
-    が用いられる。ここで、$\bm{t}$は教師信号、$\bm{y}$は出力信号である。
+    が用いられる。ここで、$\bm{t}$は教師ラベル、$\bm{y}$は出力ニューロン、$N$は出力のニューロン数である。
     複素ニューラルネットワークにおける学習においては、
     活性化関数として式\ref{activation_function}を、誤差関数として式\ref{error_function}を用いた場合、
     \begin{equation}
       \label{eq:update_a}
       \begin{split}
-        |w_{nm}| \leftarrow |w_{nm}| - lr^\mathrm{a} & \biggl( (1-|x_{l\,n}^2|)(|x_{l\, n}| - |t_{l\, n}| \cos (\angle x_{l\, n} - \angle t_{l\, n}))|x_{l-1\, m}| \cos \theta^{\mathrm{rot}}_{nm}  \\
+        |w_{nm}| \leftarrow |w_{nm}| - \eta^\mathrm{a} & \biggl( (1-|x_{l\,n}^2|)(|x_{l\, n}| - |t_{l\, n}| \cos (\angle x_{l\, n} - \angle t_{l\, n}))|x_{l-1\, m}| \cos \theta^{\mathrm{rot}}_{nm}  \\
                         & - |x_{l\, n}| |t_{l\, n}| \sin (\angle x_{l\, n} - \angle t_{l\, n}) \frac{|x_{l-1\, m}|}{|u_{l\, n}|} \sin \theta^{\mathrm{rot}}_{nm} \biggr)
       \end{split}
     \end{equation}
     \begin{equation}
       \label{eq:update_p}
       \begin{split}
-        \angle w_{nm} \leftarrow \angle w_{nm} - lr^\mathrm{p} & \bigg( (1-|x_{l\,n}^2|)(|x_{l\, n}| - |t_{l\, n}| \cos (\angle x_{l\, n} - \angle t_{l\, n}))|x_{l-1\, m}| \sin \theta^{\mathrm{rot}}_{nm} \\
+        \angle w_{nm} \leftarrow \angle w_{nm} - \eta^\mathrm{p} & \bigg( (1-|x_{l\,n}^2|)(|x_{l\, n}| - |t_{l\, n}| \cos (\angle x_{l\, n} - \angle t_{l\, n}))|x_{l-1\, m}| \sin \theta^{\mathrm{rot}}_{nm} \\
                         &  + |x_{l\, n}| |t_{l\, n}| \sin (\angle x_{l\, n} - \angle t_{l\, n}) \frac{|x_{l-1\, m}|}{|u_{l\, n}|} \cos \theta^{\mathrm{rot}}_{nm} \bigg)
       \end{split}
     \end{equation}
@@ -233,8 +234,9 @@
       \label{eq:rot}
         \theta^{\mathrm{rot}}_{nm} = \angle x_{l\, n} - \angle x_{l-1\, m} -\angle w_{nm}
     \end{equation}
-
-    に従って振幅、位相ごとに荷重の更新を行うことで、誤差関数を小さくする方向に学習を進めることができる。\cite{CVNN}
+    に従って振幅、位相ごとに荷重の更新を行うことで、誤差関数を小さくする方向に学習を進めることができる。ここで、
+    ここで、$\eta^\mathrm{a}$、$\eta^\mathrm{p}$はそれぞれ振幅、位相の学習率である。
+    \cite{CVNN}
 
 \section{複素ニューラルネットワークを用いた円偏波地中レーダシステム}
 
@@ -254,13 +256,20 @@
   \subsection{計測システムの構成}
 
     計測システムの概要図を図\ref{fig:XYstage_configuration}に示す。
-    文献\cite{absorbing_material}に倣い、送受信アンテナ部分は、後述のように設計したアンテナとバランを
-    電磁波吸収体からなる中空円筒で覆い、さらに、これら全体をアルミニウム箔で覆ったものを用いた。これらの写真を図\ref{fig:hadaka}、図\ref{fig:oh-ware}、図\ref{fig:hoiruyaki}に示す。
+    受信アンテナとしては、直線偏波アンテナとして、図\ref{fig:rxantenna}に示したようなテーパスロットアンテナを用いる。送信アンテナとしては、
+    文献\cite{absorbing_material}に倣い、後述の通り設計した円偏波アンテナとバランを
+    電磁波吸収体からなる中空円筒で覆い、さらに、これら全体をアルミニウム箔で覆ったものを用いる。これらの写真を図\ref{fig:hadaka}、図\ref{fig:oh-ware}、図\ref{fig:hoiruyaki}に示す。
     これにより、所望の放射方向である地表面方向以外へ電磁波が放射されるのを抑制する。送受信アンテナ部分は、それぞれベクトルネットワーク
     アナライザの異なるポートに同軸ケーブル、バランを通じて接続されている。アンテナ部分は、送受信アンテナの相対的な位置が固定された状態で、XYステージにより
     実験用土槽上の任意の座標に動かすことができる。この様子を、図\ref{fig:overview}に示す。
     計測システムは、XYステージによる地表面の走査を、設定した各周波数で繰り返すことで、XYステージ上の2次元の座標と周波数ごとに、振幅と位相の情報をもつ複素数のデータ
     $S_{21}$が得られるように構成する。
+
+    \begin{figure}[hbtp]
+      \centering
+      \includegraphics[keepaspectratio, width=100mm]{Images/rxantenna.png}
+      \caption{テーパスロットアンテナ}\label{fig:rxantenna}
+    \end{figure}
 
     \begin{figure}[hbtp]
       \centering
@@ -301,8 +310,6 @@
       \end{tabular}
     \end{figure}
 
-  \newpage
-
   \subsection{複素ニューラルネットワークを用いた解析システム}
 
     測定システムにより得られた入出力ポート間の$S_{21}$の複素数データを、複素ニューラルネットワークを用いて解析する。
@@ -310,20 +317,36 @@
     本研究では、さまざまに角度を変えたパイプを対象とした計測データを複素ニューラルネットワークを用いて学習し、埋設パイプの角度を推定することの
     できるシステムを構築することを目標とする。
 
+  \subsection{ニューラルネットワークに対する入力データの形式}
+
+    \ref{sec:purpose}節で述べた通り、本システムの目標は、まばらな点に対する計測データから、所望の特徴量を抽出することである。そのため、
+    ニューラルネットワークの学習および推定に用いるデータは、まばらな点における計測データとする。学習段階では、実際には密な点において計測された
+    データから、適当に間引いたデータを用いることで、まばらな点における計測データとする。推定段階では、実際には計測されていない点におけるデータから、
+    所望の特徴量を推定する。
+
+    また、\ref{sec:background}節で述べた通り、対象物からの散乱の偏波状態は、対象物であるパイプの向きを反映したものとなる。
+    具体的には、対象物からの散乱により完全な円偏波から歪んだ楕円偏波が受信される。完全な円偏波を直交する2偏波で受信する場合、
+    これらの受信の間の位相も直交する。一方で、対象物からの散乱により完全な円偏波から歪んだ楕円偏波を受信する場合には、直交する2つの受信偏波の間の
+    位相差は$90^\circ$からずれたものとなることが期待される。このことから、受信偏波の間の位相差についての情報を含んだ入力データとして、
+    2つの直交2偏波の受信アンテナで得られる複素数$S_{21}$同士の比を取った値$S_{21}^1/S_{21}^2$を入力として用いる。
+
+
 \section{実験}
 
   \subsection{円偏波地中レーダに用いるアンテナの設計}
 
-  本研究では、地中レーダとして円偏波アンテナを用いる。地中レーダに用いられるアンテナとしては、スパイラルアンテナを用いる。実際の計測に際しては、
-  ベクトルネットワークアナライザにアンテナを接続して用いる。VNA からの給電の際には、同軸ケーブルを通じてアンテナに給電するため、同軸ケーブルと
+  本研究では、受信アンテナとしては直線偏波テーパスロットアンテナを、送信アンテナとしては円偏波スパイラルアンテナを用いた。
+  このうち、スパイラルアンテナについては、設計及びシミュレーションによる性能評価を行ったため、以下にその概要を述べる。
+
+  実際の計測に際しては、ベクトルネットワークアナライザにアンテナを接続して用いる。VNA からの給電の際には、同軸ケーブルを通じてアンテナに給電するため、同軸ケーブルと
   アンテナの間にバランを設ける。このバランは、不平衡-平衡の変換を行うだけでなく、特性インピーダンスが$50\Omega$である同軸ケーブルと、一般にこれと
   異なる入力インピーダンス特性を持つアンテナ間のインピーダンスの整合も兼ねる。そのため、アンテナの入力インピーダンス特性を調べた上で、適切な
-  インピーダンス変換を行うことができるように設計する必要がある。
+  インピーダンス変換を行うことができるようにバランを設計する必要があった。
 
   実際に設計したアンテナおよびバランを、それぞれ図\ref{fig:spiral_antenna_configuration}および図\ref{fig:taper_balun_configuration}に示す。
   設計には、有限要素法による高周波電磁界シミュレーションソフトウェアであるAnsys HFSSを用いた。
 
-  アンテナはスパイラルバランとして設計し、導体ライン幅は$3.0\mathrm{mm}$、導体ライン間のギャップは$4.1\mathrm{mm}$とした。
+  円偏波アンテナはスパイラルアンテナとして設計し、導体ライン幅は$3.0\mathrm{mm}$、導体ライン間のギャップは$4.1\mathrm{mm}$とした。
   
   バランに関して、誘電体基盤は厚さ1mm、比誘電率4.6として設計した。図\ref{fig:taper_balun_configuration}において、緑色部分は誘電体基盤を、灰色部分は
   プリント導体を表している。
@@ -343,7 +366,7 @@
     \end{minipage}
     \begin{minipage}[b]{0.495\textwidth}
       \centering
-      \includegraphics[keepaspectratio, width=75mm]{Images/spiral_withoutcord.png}
+      \includegraphics[keepaspectratio, width=75mm]{Images/spiral_withcord.png}
       \subcaption{座標系の設定}
     \end{minipage}
   \end{figure}
@@ -387,46 +410,49 @@
   を参考に$w_{\mathrm{out}} = 0.2\mathrm{mm}$とした。
 
   % https://3g-aerial.biz/en/online-calculations/other-calculations/pair-stripline-characteristic-impedance-calculator
+  \clearpage
   \begin{figure}[tbp]
     \centering
-    \begin{minipage}[b]{0.495\textwidth}
+    \begin{minipage}[b]{0.995\textwidth}
       \centering
-      \includegraphics[keepaspectratio, width=70mm]{Images/rad_pattern_far.png}
+      \includegraphics[keepaspectratio, width=100mm]{Images/rad_pattern_far.png}
       \subcaption{遠方界}
-    \end{minipage}
-    \begin{minipage}[b]{0.495\textwidth}
+    \end{minipage}\\
+    \begin{minipage}[b]{0.995\textwidth}
       \centering
-      \includegraphics[keepaspectratio, width=70mm]{Images/rad_pattern_near.png}
+      \includegraphics[keepaspectratio, width=100mm]{Images/rad_pattern_near.png}
       \subcaption{近傍界}
     \end{minipage}
-    \caption{放射パターン(電界強度)の2次元プロット}\label{fig:radiation_pattern_2D}
+    \caption{放射パターン(電界強度)の2次元プロット($\varphi = 0^\circ$)}\label{fig:radiation_pattern_2D}
   \end{figure}
   \begin{figure}[hbtp]
     \centering
     \includegraphics[keepaspectratio, width=100mm]{Images/radiation_pattern_lhcp.png}
-    \caption{遠方界における放射パターン(dBi)の2次元プロット}
+    \caption{遠方界における放射パターン(dBi)の2次元プロット($\varphi = 0^\circ$)}
     \label{fig:radiation_pattern_lhcp}
   \end{figure}
 
+  \clearpage
   \begin{figure}[tbp]
     % \centering
-    \begin{minipage}[b]{0.495\textwidth}
+    \begin{minipage}[b]{0.995\textwidth}
       \centering
-      \includegraphics[keepaspectratio, width=70mm]{Images/near_E_2GHz.png}
+      \includegraphics[keepaspectratio, width=100mm]{Images/near_E_2GHz.png}
       \subcaption{2GHz}
-    \end{minipage}
-    \begin{minipage}[b]{0.495\textwidth}
+    \end{minipage}\\
+    \begin{minipage}[b]{0.995\textwidth}
       \centering
-      \includegraphics[keepaspectratio, width=70mm]{Images/near_E_5GHz.png}
+      \includegraphics[keepaspectratio, width=100mm]{Images/near_E_5GHz.png}
       \subcaption{5GHz}
     \end{minipage}\\
-    \begin{minipage}[b]{0.495\textwidth}
+    \begin{minipage}[b]{0.995\textwidth}
       \centering
-      \includegraphics[keepaspectratio, width=70mm]{Images/near_E_10GHz.png}
+      \includegraphics[keepaspectratio, width=100mm]{Images/near_E_10GHz.png}
       \subcaption{10GHz}
     \end{minipage}
     \caption{放射パターンの3次元プロット}\label{fig:radiation_pattern_3D}
   \end{figure}
+  \clearpage
 
   \begin{figure}[hbtp]
     \centering
@@ -453,7 +479,7 @@
   受信信号を$S_{21}$として計測した。これを一回の計測として、各受信アンテナの方向H, V、および、パイプの向きを
   のように$0^{\circ}$から$170^{\circ}$まで$10^{\circ}$刻みで変えた計36回の計測を行った。これらの実験条件は図\ref{fig:msr_cond}に示した通りである。
 
-  なお、図\ref{fig:center_offset}に示すように、H方向の受信アンテナとV方向の受信アンテナは、円偏波送信アンテナにたいしてずれた位置に配置されているため、
+  なお、図\ref{fig:center_offset}に示すように、H方向の受信アンテナとV方向の受信アンテナは、円偏波送信アンテナに対してずれた位置に配置されているため、
   送受信アンテナの中点が動く範囲がHおよびV方向の受信アンテナで同じ範囲になるよう、図\ref{fig:acctual_msr_range}に示すように、
   測定の開始点はH方向およびV方向で異なる位置に設定した。
 
@@ -487,15 +513,15 @@
   \end{figure}
 
   \begin{figure}[tbp]
-    \begin{minipage}[b]{0.495\textwidth}
+    \begin{minipage}[b]{0.395\textwidth}
       \centering
-      \includegraphics[keepaspectratio, width=75mm]{Images/sampleneko.png}
+      \includegraphics[keepaspectratio, width=75mm]{Images/antenna_pos.png}
       \subcaption{送受信アンテナの配置の模式図}
       \label{fig:center_offset}
     \end{minipage}
-    \begin{minipage}[b]{0.495\textwidth}
+    \begin{minipage}[b]{0.595\textwidth}
       \centering
-      \includegraphics[keepaspectratio, width=75mm]{Images/sampleneko.png}
+      \includegraphics[keepaspectratio, width=75mm]{Images/offset.png}
       \subcaption{実際の測定範囲}
       \label{fig:actual_msr_range}
     \end{minipage}
@@ -507,89 +533,112 @@
   地中レーダシステムによって得られたデータを、複素ニューラルネットワークを用いて解析した。ここでは、まず入力データの形式について述べ、
   その後に複素ニューラルネットワークの構成について述べる。
   \subsubsection{入力データの形式}
-  入力データの例はどこに貼る？
 
   \begin{figure}[tbp]
-    \begin{minipage}[b]{0.495\textwidth}
+    \begin{minipage}[b]{0.995\textwidth}
       \centering
-      \includegraphics[keepaspectratio, width=70mm]{Images/python/rowdata/30.png}
-      \subcaption{2.5GHz}
-    \end{minipage}
-    \begin{minipage}[b]{0.495\textwidth}
-      \centering
-      \includegraphics[keepaspectratio, width=70mm]{Images/python/rowdata/80.png}
-      \subcaption{7.5GHz}
+      \includegraphics[keepaspectratio, width=140mm]{Images/python/yokonarabe/019/50.png}
+      \subcaption{4.0GHz}
     \end{minipage}\\
-    \begin{minipage}[b]{0.495\textwidth}
+    \begin{minipage}[b]{0.995\textwidth}
       \centering
-      \includegraphics[keepaspectratio, width=70mm]{Images/python/rowdata/130.png}
-      \subcaption{12.5GHz}
-    \end{minipage}
-    \begin{minipage}[b]{0.495\textwidth}
+      \includegraphics[keepaspectratio, width=140mm]{Images/python/yokonarabe/019/90.png}
+      \subcaption{6.0GHz}
+    \end{minipage}\\
+    \begin{minipage}[b]{0.995\textwidth}
       \centering
-      \includegraphics[keepaspectratio, width=70mm]{Images/python/rowdata/180.png}
-      \subcaption{17.5GHz}
+      \includegraphics[keepaspectratio, width=140mm]{Images/python/yokonarabe/019/130.png}
+      \subcaption{8.0GHz}
+    \end{minipage}\\
+    \begin{minipage}[b]{0.995\textwidth}
+      \centering
+      \includegraphics[keepaspectratio, width=140mm]{Images/python/yokonarabe/019/170.png}
+      \subcaption{10.0GHz}
     \end{minipage}
-    \caption{パイプが$70^{\circ}$、受信アンテナの方向がHのときの各周波数における$S_{21}$}
+    \caption{パイプの向きが$70^{\circ}$、受信アンテナの方向がHのときの各周波数における$S_{21}$}
   \end{figure}
 
   \begin{figure}[tbp]
-    \begin{minipage}[b]{0.495\textwidth}
+    \begin{minipage}[b]{0.995\textwidth}
       \centering
-      \includegraphics[keepaspectratio, width=70mm]{Images/python/rowdata/30.png}
-      \subcaption{2.5GHz}
-    \end{minipage}
-    \begin{minipage}[b]{0.495\textwidth}
-      \centering
-      \includegraphics[keepaspectratio, width=70mm]{Images/python/rowdata/80.png}
-      \subcaption{7.5GHz}
+      \includegraphics[keepaspectratio, width=140mm]{Images/python/yokonarabe/diff/processed/50.png}
+      \subcaption{4.0GHz}
     \end{minipage}\\
-    \begin{minipage}[b]{0.495\textwidth}
+    \begin{minipage}[b]{0.995\textwidth}
       \centering
-      \includegraphics[keepaspectratio, width=70mm]{Images/python/rowdata/130.png}
-      \subcaption{12.5GHz}
-    \end{minipage}
-    \begin{minipage}[b]{0.495\textwidth}
+      \includegraphics[keepaspectratio, width=140mm]{Images/python/yokonarabe/diff/processed/90.png}
+      \subcaption{6.0GHz}
+    \end{minipage}\\
+    \begin{minipage}[b]{0.995\textwidth}
       \centering
-      \includegraphics[keepaspectratio, width=70mm]{Images/python/rowdata/180.png}
-      \subcaption{17.5GHz}
+      \includegraphics[keepaspectratio, width=140mm]{Images/python/yokonarabe/diff/processed/130.png}
+      \subcaption{8.0GHz}
+    \end{minipage}\\
+    \begin{minipage}[b]{0.995\textwidth}
+      \centering
+      \includegraphics[keepaspectratio, width=140mm]{Images/python/yokonarabe/diff/processed/170.png}
+      \subcaption{10.0GHz}
     \end{minipage}
-    \caption{パイプが$70^{\circ}$のときの、各アンテナの向きの間での$S_{21}$の振幅の比および位相差}
+    \caption{パイプがの向き$70^{\circ}$のときの、$S_{21}^{H}$と$S_{21}^{V}$の振幅比および位相差}
   \end{figure}
   
 
-  本実験では、35×35の測定点に対し$S_{21}^{H}$をそのまま入力データとして用いるパターンと、H受信とV受信の間の$S_{21}$の比をとった
+  本実験では、$S_{21}^{H}$をそのまま入力データとして用いるパターンと、各周波数および$xy$座標におけるH受信とV受信の間の$S_{21}$の比をとった
   $\cfrac{S_{21}^{H}}{S_{21}^{V}}$を入力データとして用いるパターンの2通りについて実験を行った。
-
-  まず、それを5点おきにサンプリングした7×7のデータを用意した。1つのサンプリングされたデータに対し、データセットの拡張のために、
+  $xy$座標については、$35\times35$点の計測点に対して、$x,y$のいずれの方向についても5点おきにサンプリングし、$7\times7$のデータとした。周波数$f$については、取得した1.00GHz
+  から11.00GHzまでの0.05GHz刻みの201点のデータのうち、3.00GHzから11.00GHzまでを0.10GHz刻みでサンプリングした$Nf = 81$点のデータを使用した。これらの周波数は、
+  複素ニューラルネットワークへの入力として与えられる際には、図\ref{fig:neuralnet}に示すように、チャネル方向の次元として用いた。
+  1つのサンプリングされたデータに対し、データセットの拡張のために、
   これらを$0^\circ$、$90^\circ$、$180^\circ$、$270^\circ$回転させ、さらにそれぞれについて画像を反転させたデータを用意した。
   これにより、1回の測定当たり$5\times 5 \times 4 \times 2 = 200$個のデータを得ることができ、したがって、データセットのサイズは
   $18\times 200 = 3600$個となった。
   このうち、2700個を学習データとし、残り900個をテストデータとした。
   
   \subsubsection{複素ニューラルネットワークの構成}
-  本実験では、畳み込み層を1層、全結合層を1層とした複素ニューラルネットワークを用いた。
-  畳み込み層の層数は16とし、活性化関数には複素tanh関数を用いた。
+  \begin{figure}[hbtp]
+    \centering
+    \includegraphics[keepaspectratio, width=130mm]{Images/network.png}
+    \caption{ニューラルネットワークの構造}
+    \label{fig:neuralnet}
+  \end{figure}
+  本実験では、図\ref{fig:neuralnet}に示したような、畳み込み層を1層、全結合層を1層とした複素ニューラルネットワークを用いた。
+  畳み込み層におけるカーネル数は$N_k = 16$とし、活性化関数には複素tanh関数を用いた。畳み込み層の各層のサイズは、入力データの次元に合わせて、
+  $7\times7\times81$とした。畳み込み層を通じた入力$x$から内部出力$u$への変換は、次式で与えられる。
+
+  \begin{equation}
+    u_k = f\left(\sum_{f=1}^{N_k} w_{k\,f,x,y}^k\, x_{f,x,y}\right)
+  \end{equation}
+
+  ここで、$u_k$は内部出力の$k$番目における値を表し、
+  $w_{f,x,y}^k$は、畳み込み層の$k$番目の層の$f$番目のチャネルの$x,y$座標における重みを表し、$x_{f,x,y}$は、入力データの$f$番目のチャネルの$x,y$座標における値を表す。
+
+  また、全結合層を通じた内部出力$u$から出力$y$への変換は、次式で与えられる。
+  \begin{equation}
+    y_l = f\left(\sum_{k=1}^{16} w_{a\,ki} u_k\right)
+  \end{equation}
+  ここで、$y_l$は出力の$l$番目における値を表し、$w_{a\,kl}$は、全結合層の$l$番目のニューロンの$k$番目の内部出力に対する重みを表し、$u_k$は、畳み込み層の$k$番目の内部出力を表す。
+  $l$の範囲は教師データの与え方によって異なる。
+
   教師データの与え方としては、次の3通りについて実験を行った。
   \begin{equation}\label{eq:onehot}
-    \mathbf{v}_j =
+    \mathbf{v}_l =
     \begin{cases}
-        1 & \text{if } j = i, \\
+        1 & \text{if } l = m, \\
         0 & \text{otherwise}.
     \end{cases}
   \end{equation}
   \begin{equation}\label{eq:soft}
-    \mathbf{v}_j =
+    \mathbf{v}_l =
     \begin{cases}
-        1 & \text{if } j = i, \\
-        0 & \text{if } j = i \pm 1 \text{ or } \{i, j\} = \{0, 17\}.\\
+        1 & \text{if } l = m, \\
+        0 & \text{if } l = m \pm 1 \text{ or } \{l, m\} = \{0, 17\}.\\
         -1 & \text{otherwise}.
     \end{cases}
   \end{equation}
   \begin{equation}\label{eq:circular}
-    \mathbf{v}_j = e^{i\cdot2\theta}
+    \mathbf{v}_l = e^{i\cdot2\theta}
   \end{equation}
-  ここで、$\mathbf{v}_j$は教師データの$j$番目の要素を表し、$i$は、対象物の角度が0°の場合のクラスを0、10°の場合のクラスを1、...、170°の場合のクラスを17としたときの
+  ここで、$\mathbf{v}_l$は教師データの$l$番目の要素を表し、$m$は、対象物の角度が0°の場合のクラスを0、10°の場合のクラスを1、...、170°の場合のクラスを17としたときの
   クラスの番号を表す。また、$\theta$は対象物の向きをラジアン表記したものを表す。
   1つ目の教師データの与え方は、対象物の向きをクラス分けしたものを教師データとして与えるものである。クラスの番号に一致する要素には1を、それ以外の要素には0を与える。
   以下では、この教師データの与え方をOne-hot型の教師データと呼ぶ。
@@ -601,16 +650,12 @@
   この教師データの与え方をCircular型の教師データと呼ぶ。
 
   ここで、One-hot型とSoft型の教師データの与え方については、最終的な出力のニューロン数が18、Circular型の教師データの与え方の場合には、最終的な出力のニューロン数が1
-  となっている。これらの各ニューロンは、直前の畳み込み層の出力から、全結合層を経て出力される。すなわち、最終層の$i$番目のニューロンの出力$y_i$は、
-  \[
-    y_i = f(\sum_{k=1}^{16} w_{ki} u_k)
-  \]
-  となる。ニューラルネットワーク全体の構造としては、図\ref{fig:neuralnet}に示す通りのものとなる。(TODO: 改善)
-  学習の最適化には、ミニバッチSGDを用いた。(TODO: 引用)学習率は、$S_{21}^H$をそのまま入力として用いる場合には0.0015、$S_{21}^{H}/S_{21}^{V}$を入力として
-  用いる場合には0.0010とした。ミニバッチサイズは32、学習のエポック数は20とした。TO DO: 説明もっと書いたほうがいいかも
-  学習の進行度は、誤差関数として用いている
-  平均二乗誤差に加え、分類型の教師データの場合には、
-  TODO: 数式もっとちゃんと書く
+  となっている。すなわち、One-hot型とSoft型の教師データの与え方の場合には$l \in \{0,1,...,17\}$、Circular型の教師データの与え方の場合には$l \in \{0\}$である。
+  となる。
+
+  学習の最適化には、ミニバッチSGDを用いた。学習率$\eta$は、$S_{21}^H$をそのまま入力として用いる場合には0.0015、$S_{21}^{H}/S_{21}^{V}$を入力として
+  用いる場合には0.0010とした。ミニバッチサイズは32、学習のエポック数は20とした。
+  学習の進行度は、誤差関数として用いている平均二乗誤差に加え、分類型の教師データの場合には、
 
   \begin{equation}
     acc_{c} = \frac{n(\{x \in S \, \mid\, PredClass(x) = LabeledClass(x)\})}{n(S)},
@@ -622,20 +667,19 @@
     PredClass_{c} = \mathrm{arg}\max_{i} |y(\mathbf{x}) - \mathbf{t}_i|
   \end{equation} %TODO: 修正
   
-  また、回帰型の教師データの場合には、
+  また、Circular型の教師データの場合には、
 
   \begin{equation}
     \Delta\theta = |\theta_{out}(x) - \theta_{t}(x)| =  |\mathrm{arg}\{y(x)\}- \theta_{t}(x)| ( 0 \le \Delta\theta \le 90^{\circ})
   \end{equation} %TODO: 修正
 
-  で定義される出力と教師データの位相差と、これを用いて
+  で定義される角度の推定誤差と、これを用いて
 
   \begin{equation}
     acc_{r} = \frac{n(\{x \in S \, \mid\, \Delta\theta < 5^{\circ}\})}{n(S)}
   \end{equation} %TODO: 修正
 
   で定義される擬似的な正解率を用いて評価した。
-
   ここで、$acc_c$は分類型の教師データを用いた場合の正解率、$acc_r$は回帰型の教師データを用いた場合の正解率、$S$はテストデータの集合、$n(S)$は$S$の要素数、
   $PredClass(x)$は$x$に対する予測されたクラス、$LabelClass(x)$は$x$に対する正解クラス、$\theta_{out}(x)$は$x$に対する予測された角度、$\theta_{t}$は$x$に対する正解角度を表す。
 
@@ -645,20 +689,36 @@
     \theta_{out}(x) = \mathrm{arg}(y(x))
   \end{equation} %TODO: 修正
 
-  \begin{figure}[hbtp]
-    \centering
-    \includegraphics[keepaspectratio, width=110mm]{Images/network.png}
-    \caption{ニューラルネットワークの構造}
-    \label{fig:neuralnet}
-  \end{figure}
-  
+  誤差関数については、1つのミニバッチに対する学習（これを1イテレーションと呼ぶ）ごとに、学習データセットとテストデータセット内の全てのデータに対して計算し、記録した。
+  また、正解率、およびCircular型の教師データを用いた場合の角度の推定誤差については、1つのエポックに対する学習ごとに、学習データセットとテストデータセット内の全てのデータに対して計算し、記録した。
 
 \section{結果}
-  各条件における、誤差関数の値の推移を図\ref{}-\ref{}に示す。また、教師データの与え方としてCircularラベルを用いた場合については、
-  エポックごとの出力と教師データの位相差の推移を図\ref{}に示す。
 
-  図から、
-  どのくらい結果を説明する？
+  各条件における、誤差関数の値の推移を図\ref{fig:loss_onehot}-\ref{fig:loss_circular}に、正解率の推移を図\ref{fig:acc_onehot}-\ref{fig:acc_circular}に示す。
+  また、教師データの与え方としてCircularラベルを用いた場合については、エポックごとの出力と教師データの位相差の推移を図\ref{fig:avg_circular}に示す。
+
+  One-hotラベルを用いた場合には、入力として$S_21^H$をそのまま用いた場合、途中で一度値が増加したのち、再び減少に転じて、最終的には学習データとテストデータのいずれについても
+  0.056程度に収束した。一方で正解率については、学習データとテストデータのいずれについても、学習を繰り返すにつれて増加した。
+  入力として$S_21^H/S_21^V$を用いた場合には、初めの損失関数の値は0.8程度であるものの、
+  最終的には、学習データとテストデータのいずれにおいても$S_21^H$と同様に0.056程度に収束した。正解率については、初めの5エポック程度で学習データに対する正解率は0.6程度、
+  テストデータに対する正解率は0.4程度まで増加するものの、その後は学習をすすめるにつれて、かえって減少する傾向を示した。
+
+  Softラベルを用いた場合には、入力として$S_21^H$をそのまま用いた場合、学習データとテストデータのいずれについても、学習を繰り返すにつれて損失関数の値は徐々に減少していたが、
+  学習を打ち切った時点においても、損失関数の値は0.35程度となっていた。正解率についても、学習を繰り返すにつれて徐々に増加するものの、大きな正解率の向上は見られず、最終的に
+  学習データとテストデータの何に対しても0.2程度の値となっていた。一方、$S_21^H/S_21^V$を用いた場合には、学習データにおける損失関数は徐々に減少して0.06程度に収束しているものの、
+  テストデータにおける損失関数は学習データほどの減少は見られず、0.2から0.3程度の値となっていた。正解率については、学習データとテストデータの何に対しても学習を繰り返すにつれて
+  増加する傾向を示し、最終的な正解率は、学習データに対しては0.99程度、テストデータに対しては0.72程度と高い水準を示した。
+
+  Circularラベルを用いた場合には、入力として$S_21^H$をそのまま用いた場合、学習データとテストデータのいずれについても、初めの損失関数の値は1.0程度であり、
+  学習を打ち切った時点においても、損失関数の値は0.6から1.0程度の間の値を取り、損失関数の値が大きく減少することも収束することもなかった。正解率についても、初めの0.056程度から
+  わずかに増加していたものの、20エポックの学習が終了した時点で、学習データとテストデータの何に対しても、正解率は0.1に満たない程度であった。一方、$S_21^H/S_21^V$を用いた場合には、
+  学習データにおける損失関数は徐々に減少し0.1程度に収束し、テストデータについては、収束はしないものの、学習を繰り返すにつれて損失関数の値は減少する傾向を示した。正解率については、
+  学習データに対しては学習を繰り返すにつれて徐々に増加し、学習を打ち切った時点において、学習データに対しては0.6程度であった。テストデータに対しては、学習データに対してほどの
+  正解率の向上は見られなかったものの、最終的に0.2程度の値となっていた。
+
+  Circularラベルを用いた場合の角度の推定誤差については、入力の$S_21^H$をそのまま用いた場合には、学習を進めても$32^{\circ}$程度の誤差が残り、
+  学習データとテストデータについてほとんど同様の傾向を示した。一方、入力に$S_21^H/S_21^V$を用いた場合には、学習を繰り返すにつれて徐々に誤差が減少し、
+  20エポックの学習が終了した時点で、学習データに対しては$5^{\circ}$程度、テストデータに対しては$20^{\circ}$程度の誤差となった。
 
   \clearpage
   \begin{figure}[tbp]
@@ -673,6 +733,7 @@
       \subcaption{入力: $S^H_{21} / S^V_{21}$}
     \end{minipage}
     \caption{One-Hotラベルを用いた場合の誤差関数の推移}
+    \label{fig:loss_onehot}
   \end{figure}
   \begin{figure}[tbp]
     \begin{minipage}[b]{0.495\textwidth}
@@ -686,6 +747,7 @@
       \subcaption{入力: $S^H_{21} / S^V_{21}$}
     \end{minipage}
     \caption{Softラベルを用いた場合の誤差関数の推移}
+    \label{fig:loss_soft}
   \end{figure}
   \begin{figure}[tbp]
     \begin{minipage}[b]{0.495\textwidth}
@@ -699,6 +761,7 @@
       \subcaption{入力: $S^H_{21} / S^V_{21}$}
     \end{minipage}
     \caption{Circularラベルを用いた場合の誤差関数の推移}
+    \label{fig:loss_circular}
   \end{figure}
   \clearpage
   \begin{figure}[tbp]
@@ -713,6 +776,7 @@
       \subcaption{入力: $S^H_{21} / S^V_{21}$}
     \end{minipage}
     \caption{One-Hotラベルを用いた場合の正解率の推移}
+    \label{fig:acc_onehot}
   \end{figure}
   \begin{figure}[tbp]
     \begin{minipage}[b]{0.495\textwidth}
@@ -726,6 +790,7 @@
       \subcaption{入力: $S^H_{21} / S^V_{21}$}
     \end{minipage}
     \caption{Softラベルを用いた場合の正解率の推移}
+    \label{fig:acc_soft}
   \end{figure}
   \begin{figure}[tbp]
     \begin{minipage}[b]{0.495\textwidth}
@@ -739,6 +804,7 @@
       \subcaption{入力: $S^H_{21} / S^V_{21}$}
     \end{minipage}
     \caption{Circularラベルを用いた場合の擬似正解率の推移}
+    \label{fig:acc_circular}
   \end{figure}
   \clearpage
   \begin{figure}[tbp]
@@ -752,21 +818,37 @@
       \includegraphics[keepaspectratio, width=80mm]{Images/python/avg_202402052149.png}
       \subcaption{入力: $S^H_{21} / S^V_{21}$}
     \end{minipage}
-    \caption{Circularラベルを用いた場合の出力の位相と教師ラベルの位相の差の推移}
+    \caption{Circularラベルを用いた場合の角度の推定誤差の推移}
+    \label{fig:avg_circular}
   \end{figure}
 \section{考察}
-  まず、One-Hotラベルを用いた場合について、誤差関数の値が0.06程度に収束している、また、正解率についても途中から減少している。このことは、
-  出力のニューロンが全て$0 + 0i$に収束してしまっていることを示唆している。これは、One-Hotラベルを用いた場合には、出力のニューロンのみを
-  $1 + 0i$に近づけ、それ以外のニューロンを$0 + 0i$に近づけるようにうまく学習するよりも、最終的な結合荷重の重みを0にすることで全ての出力ニューロン
-  を$0 + 0i$に収束させる方が、誤差関数の値を小さくすることができる（とニューラルネットワークが”判断”した TODO: 表現）ためであると考えられる。
-  しかし、結合荷重が0に収束する前に早い段階で学習を打ち切ることで、一定の正解率を得ることができる可能性はある。
-  また、Softラベルを用いた場合については、誤差関数の
 
-\section{今後の課題}
-  がんばります
+  まず、One-Hotラベルを用いた場合について、誤差関数の値が0.056程度に収束し、また、正解率についても途中から減少した。0.056はおよそ1/18に等しく、
+  このことは、出力のニューロンが全て$0 + 0i$に収束してしまっていることを示唆している。これは、One-Hotラベルを用いた場合には、正解クラスに対応するニューロンのみを
+  $1 + 0i$に近づけ、それ以外のニューロンを$0 + 0i$に近づけるようにうまく学習するよりも、最終的な結合荷重の重みを0に近づけるなどして全ての出力ニューロン
+  を$0 + 0i$に収束させる方が、誤差関数の値を小さくすることができたためであると考えられる。このため、複素ニューラルネットワークを用いた分類問題に対しては、
+  One-Hotラベルを用いることはあまり適切でないと考えられる。
+  
+  One-Hotラベルを用いた場合に対して、Softラベルを用いた場合には、このような問題は見られず、
+  特に$S_{21}^H/S_{21}^V$を用いた場合に高い正解率を示したことから、Softラベルを用いることは有効であったと考えられる。また、学習を打ち切った時点においても
+  学習が収束しきっていないことから、学習を繰り返すことでさらに正解率を向上させることができる可能性があると考えられる。
+
+  Circularラベルを用いた場合には、入力として$S_{21}^H$をそのまま用いた場合には、学習があまり進行しなかった一方で、$S_{21}^H/S_{21}^V$を用いた場合には、
+  学習が進行し、一定の学習成果を示した。Circularラベルは、One-hotラベルやSoftラベルとは異なり、角度を連続的な変数として扱うものであり、
+  このような場合、入力として$S_{21}^H/S_{21}^V$のような、2偏波における受信の位相差を積極的に利用するような入力を用いることが有効であると考えられる。
+
+\section{結論}
+
+  複素ニューラルネットワークを用い。出力の角度について適切なラベリングを行うことで、地中レーダシステムによって得られたデータから角度の特徴量を抽出する
+  ことができる可能性が示された。またその際、入力として、$S_{21}^H/S_{21}^V$のような、直交2偏波に対する受信の位相差を積極的に利用することが有効である
+  可能性が示された。しかし、本研究は、ニューラルネットワークの入力に用いる計測点が等間隔であっため、実際の応用にあたっては、不規則な計測点でのデータから
+  の特徴量の抽出が行えるよう、計測点の座標を入力に明示的に考慮したネットワークの構造を検討する必要がある。また、計測対象が測定範囲のほぼ中央に位置している
+  場合のみ考えており、計測対象の位置に対する頑健性については検討が不十分である。さらに、より精度の高い推定には、より多くのデータを用いた学習が必要である
+  が、学習に十分なデータセットを取得する方法についても検討する必要がある。これらの課題を解決することで、本手法を用いた円偏波を用いる適応的二重偏波地中レーダ
+  システムが実用レベルで実現可能となることを期待している。
+
+
 \newpage
-\section{謝辞}
-  ありがとうございました
 \bibliographystyle{ieeetr}
 \bibliography{refs}
 
