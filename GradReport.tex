@@ -537,16 +537,26 @@
   \]
   となる。ニューラルネットワーク全体の構造としては、図\ref{fig:neuralnet}に示す通りのものとなる。(TODO: 改善)
   学習の最適化には、SGDを用いた。(TODO: 引用)学習率は0.001、ミニバッチサイズは32、エポック数は20とした。学習の進行度は、誤差関数として用いている
-  平均二乗誤差に加え、分類型の教師データの場合には正解率を、回帰型の教師データに対しては位相差、および次で定義する擬似的な正解率を用いて評価した。
-  それぞれ分類型、回帰型の教師データを用いた場合の正解率は、次式で定義する。
+  平均二乗誤差に加え、分類型の教師データの場合には、
 
   \begin{equation}
     acc_{c} = \frac{n(\{x \in S \, \mid\, PredClass(x) = LabeledClass(x)\})}{n(S)},
   \end{equation} %TODO: 修正
 
+  で定義される正解率を用いて評価した。また、回帰型の教師データの場合には、
+
   \begin{equation}
-    acc_{r} = \frac{n(\{x \in S \, \mid\, |\theta_{out}(x) - \theta_{t}(x)| < 5^{\circ}\})}{n(S)}
+    \Delta\theta = |\theta_{out}(x) - \theta_{t}(x)| ( 0 \le \Delta\theta \le 90^{\circ})
   \end{equation} %TODO: 修正
+
+  で定義される位相差と、これを用いて
+
+  \begin{equation}
+    acc_{r} = \frac{n(\{x \in S \, \mid\, \Delta\theta < 5^{\circ}\})}{n(S)}
+  \end{equation} %TODO: 修正
+
+  で定義される擬似的な正解率を用いて評価した。
+
   ここで、$acc_c$は分類型の教師データを用いた場合の正解率、$acc_r$は回帰型の教師データを用いた場合の正解率、$S$はテストデータの集合、$n(S)$は$S$の要素数、
   $PredClass(x)$は$x$に対する予測されたクラス、$LabelClass(x)$は$x$に対する正解クラス、$\theta_{out}(x)$は$x$に対する予測された角度、$\theta_{t}$は$x$に対する正解角度を表す。
 
@@ -565,7 +575,9 @@
   
 
 \section{結果}
-  各条件における、誤差関数の値の推移を図\ref{}に示す。
+  各条件における、誤差関数の値の推移を図\ref{}-\ref{}に示す。また、教師データの与え方としてCircularラベルを用いた場合については、
+
+
 
   \clearpage
   \begin{figure}[tbp]
@@ -646,7 +658,9 @@
   \end{figure}
   \clearpage
 \section{考察}
+
   
+\section{今後の課題}
 
 
 \bibliographystyle{ieeetr}
