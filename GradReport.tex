@@ -142,14 +142,14 @@
     \cite{prestack_migration}。これを解決するために、マイグレーションという手法が用いられることがある。マイグレーションは、対象物からの反射波を反射
     体位置から放射されたものと考え、複数の受信点から反射波の観測を考慮することで、より精確なイメージングを図る方法である\cite{gpr_migration}。
 
-    \begin{figure}[htbp]
+    \begin{figure}[tbp]
       \centering
-      \begin{minipage}[b]{0.45\hsize}
+      \begin{minipage}[b]{0.5\textwidth}
         \centering
         \includegraphics[keepaspectratio, width=70mm]{Images/SFCW_Kido.png}
         \subcaption{STFW}\label{SFCW_Kido}
       \end{minipage}
-      \begin{minipage}[b]{0.45\hsize}
+      \begin{minipage}[b]{0.5\textwidth}
         \centering
         \includegraphics[keepaspectratio, width=70mm]{Images/pulse_Kido.png}
         \subcaption{パルス型}\label{pulse_Kido}
@@ -323,18 +323,18 @@
     \begin{minipage}[b]{0.5\textwidth}
       \centering
       \includegraphics[keepaspectratio, width=75mm]{Images/spiral_withoutcord.png}
-      \subcaption{座標系}
+      \subcaption{座標系の設定}
     \end{minipage}
   \end{figure}
 
-  \begin{figure}[htbp]
+  \begin{figure}[tbp]
     \centering
-    \begin{minipage}[b]{0.46\hsize}
+    \begin{minipage}[b]{0.5\textwidth}
       \centering
       \includegraphics[keepaspectratio, width=75mm]{Images/taper_balun_top.png}
       \subcaption{下面図}
     \end{minipage}
-    \begin{minipage}[b]{0.46\hsize}
+    \begin{minipage}[b]{0.5\textwidth}
       \centering
       \includegraphics[keepaspectratio, width=75mm]{Images/taper_balun_bottom.png}
       \subcaption{上面図}
@@ -342,10 +342,13 @@
     \caption{バランの構造}\label{fig:taper_balun_configuration}
   \end{figure}
 
-  設計したアンテナについて、右円偏波および左円偏波について、5GHz、10GHz、15GHzでゲインをシミュレーションにより計算した2次元にプロットしたものを図\ref{fig:radiation_pattern_2D}
-  に示す。また、このうち右円偏波については、5GHz、10GHz、15GHzの角周波数での放射パターンの3次元で可視化したものを図\ref{fig:radiation_pattern_3D}に示す。
+  設計したアンテナについて、近傍界(r = 50mm)、遠方界のそれぞれについて、1GHz、2GHz、4GHz、5GHz、8GHz、10GHz、15GHzにおける
+  電界強度ををシミュレーションにより計算しプロットしたものを図\ref{fig:radiation_pattern_2D}
+  に示す。また、このうち右円偏波については、2GHz、5GHz、10GHzの各周波数での放射パターンの3次元で可視化したものを図\ref{fig:radiation_pattern_3D}に示す。
+  さらに、遠方界における放射パターンを、無指向性アンテナに対する利得の形で表した2次元プロットを図\ref{fig:radiation_pattern_lhcp}に示す。
+
   このアンテナは地中レーダに用いるため、所望の偏波状態については、地面に向いている面についてのみ高いゲインを持っていることが望まし
-  い。図\ref{fig:radiation_pattern_2D}
+  い。図\ref{fig:radiation_pattern_lhcp}
   から、アンテナ面に対して地面と反対側の面についてはゲインが概ね$-10\mathrm{dB_i}$以下と低く抑えられている一方、地面に向ける面の鉛直下向きから$\displaystyle \pm 30^{\circ}$
   程度の範囲についてはゲインが各周波数で$6\mathrm{dB_i}$程度と高く設計できていたことがわかった。
 
@@ -362,38 +365,47 @@
   単純なペアマイクロストリップラインでは特性インピーダンスに周波数依存性を持たせるのが困難であるため、特性インピーダンスが$160\Omega$程度となるよう、文献\cite{pair_microstrip_line}
   を参考に$w_{\mathrm{out}} = 0.2\mathrm{mm}$とした。
 
+  \clearpage
   % https://3g-aerial.biz/en/online-calculations/other-calculations/pair-stripline-characteristic-impedance-calculator
-  \begin{figure}[htbp]
+  \begin{figure}[tbp]
     \centering
-    \begin{minipage}[b]{0.42\hsize}
+    \begin{minipage}[b]{0.5\textwidth}
       \centering
-      \includegraphics[keepaspectratio, width=80mm]{Images/radiation_pattern_rhcp.png}
-      \subcaption{右円偏波}
+      \includegraphics[keepaspectratio, width=80mm]{Images/rad_pattern_far.png}
+      \subcaption{遠方界}
     \end{minipage}
-    \begin{minipage}[b]{0.42\hsize}
+    \begin{minipage}[b]{0.5\textwidth}
       \centering
-      \includegraphics[keepaspectratio, width=80mm]{Images/radiation_pattern_lhcp.png}
-      \subcaption{左円偏波}
+      \includegraphics[keepaspectratio, width=80mm]{Images/rad_pattern_near.png}
+      \subcaption{近傍界}
     \end{minipage}
-    \caption{放射パターンの2次元プロット}\label{fig:radiation_pattern_2D}
+    \caption{放射パターン(電界強度)の2次元プロット}\label{fig:radiation_pattern_2D}
   \end{figure}
-
-  \begin{figure}[htbp]
+  \begin{figure}[hbtp]
     \centering
-    \begin{minipage}[b]{0.45\hsize}
+    \includegraphics[keepaspectratio, width=100mm]{Images/radiation_pattern_lhcp.png}
+    \caption{遠方界における放射パターン(dBi)の2次元プロット}
+    \label{fig:radiation_pattern_lhcp}
+  \end{figure}
+  \clearpage
+
+  \clearpage
+  \begin{figure}[tbp]
+    % \centering
+    \begin{minipage}[b]{0.49\textwidth}
       \centering
-      \includegraphics[keepaspectratio, width=80mm]{Images/gain_rhcp_5GHz.png}
+      \includegraphics[keepaspectratio, width=80mm]{Images/near_E_2GHz.png}
+      \subcaption{2GHz}
+    \end{minipage}
+    \begin{minipage}[b]{0.49\textwidth}
+      \centering
+      \includegraphics[keepaspectratio, width=80mm]{Images/near_E_5GHz.png}
       \subcaption{5GHz}
-    \end{minipage}
-    \begin{minipage}[b]{0.45\hsize}
+    \end{minipage}\\
+    \begin{minipage}[b]{0.49\textwidth}
       \centering
-      \includegraphics[keepaspectratio, width=80mm]{Images/gain_rhcp_10GHz.png}
+      \includegraphics[keepaspectratio, width=80mm]{Images/near_E_10GHz.png}
       \subcaption{10GHz}
-    \end{minipage}
-    \begin{minipage}[b]{0.45\hsize}
-      \centering
-      \includegraphics[keepaspectratio, width=80mm]{Images/gain_rhcp_15GHz.png}
-      \subcaption{15GHz}
     \end{minipage}
     \caption{放射パターンの3次元プロット}\label{fig:radiation_pattern_3D}
   \end{figure}
@@ -404,6 +416,8 @@
     \caption{設計したアンテナにおける軸比の周波数特性}
     \label{fig:axial_ratio}
   \end{figure}
+
+  \clearpage
 
   \begin{figure}[hbtp]
     \centering
@@ -501,7 +515,7 @@
     \mathbf{v}_j =
     \begin{cases}
         1 & \text{if } j = i, \\
-        0 & \text{if} j = i \pm 1 \text{or} {i, j} = {0, 17}.\\
+        0 & \text{if } j = i \pm 1 \text{ or } \{i, j\} = \{0, 17\}.\\
         -1 & \text{otherwise}.
     \end{cases}
   \]
@@ -558,73 +572,76 @@
     \begin{minipage}[b]{0.5\textwidth}
       \centering
       \includegraphics[keepaspectratio, width=75mm]{Images/python/loss_202402051754.png}
-      \subcaption{5GHz}
+      \subcaption{入力: $S^H_{21}$}
     \end{minipage}
     \begin{minipage}[b]{0.5\textwidth}
       \centering
       \includegraphics[keepaspectratio, width=75mm]{Images/python/loss_202402052233.png}
-      \subcaption{10GHz}
+      \subcaption{入力: $S^H_{21} / S^V_{21}$}
     \end{minipage}
+    \caption{One-Hotラベルを用いた場合の誤差関数の推移}
   \end{figure}
   \begin{figure}[tbp]
     \begin{minipage}[b]{0.5\textwidth}
       \centering
       \includegraphics[keepaspectratio, width=75mm]{Images/python/loss_202402051931.png}
-      \subcaption{5GHz}
+      \subcaption{入力: $S^H_{21}$}
     \end{minipage}
     \begin{minipage}[b]{0.5\textwidth}
       \centering
       \includegraphics[keepaspectratio, width=75mm]{Images/python/loss_202402052150.png}
-      \subcaption{10GHz}
+      \subcaption{入力: $S^H_{21} / S^V_{21}$}
     \end{minipage}
+    \caption{Softラベルを用いた場合の誤差関数の推移}
   \end{figure}
-  \begin{figure}[htbp]
+  \begin{figure}[tbp]
     \begin{minipage}[b]{0.5\textwidth}
       \centering
       \includegraphics[keepaspectratio, width=75mm]{Images/python/loss_202402052108.png}
-      \subcaption{5GHz}
+      \subcaption{入力: $S^H_{21}$}
     \end{minipage}
     \begin{minipage}[b]{0.5\textwidth}
       \centering
       \includegraphics[keepaspectratio, width=75mm]{Images/python/loss_202402052149.png}
-      \subcaption{10GHz}
+      \subcaption{入力: $S^H_{21} / S^V_{21}$}
     \end{minipage}
+    \caption{Circularラベルを用いた場合の誤差関数の推移}
   \end{figure}
   \clearpage
   \begin{figure}[tbp]
     \begin{minipage}[b]{0.5\textwidth}
       \centering
       \includegraphics[keepaspectratio, width=80mm]{Images/python/acc_202402051754.png}
-      \subcaption{5GHz}
+      \subcaption{入力: $S^H_{21}$}
     \end{minipage}
     \begin{minipage}[b]{0.5\textwidth}
       \centering
       \includegraphics[keepaspectratio, width=80mm]{Images/python/acc_202402052233.png}
-      \subcaption{10GHz}
+      \subcaption{入力: $S^H_{21} / S^V_{21}$}
     \end{minipage}
   \end{figure}
   \begin{figure}[tbp]
     \begin{minipage}[b]{0.5\textwidth}
       \centering
       \includegraphics[keepaspectratio, width=80mm]{Images/python/acc_202402051931.png}
-      \subcaption{5GHz}
+      \subcaption{入力: $S^H_{21}$}
     \end{minipage}
     \begin{minipage}[b]{0.5\textwidth}
       \centering
       \includegraphics[keepaspectratio, width=80mm]{Images/python/acc_202402052150.png}
-      \subcaption{10GHz}
+      \subcaption{入力: $S^H_{21} / S^V_{21}$}
     \end{minipage}
   \end{figure}
-  \begin{figure}[htbp]
+  \begin{figure}[tbp]
     \begin{minipage}[b]{0.5\textwidth}
       \centering
       \includegraphics[keepaspectratio, width=80mm]{Images/python/accuracy_202402052108.png}
-      \subcaption{5GHz}
+      \subcaption{入力: $S^H_{21}$}
     \end{minipage}
     \begin{minipage}[b]{0.5\textwidth}
       \centering
       \includegraphics[keepaspectratio, width=80mm]{Images/python/accuracy_202402052149.png}
-      \subcaption{10GHz}
+      \subcaption{入力: $S^H_{21} / S^V_{21}$}
     \end{minipage}
   \end{figure}
   \clearpage
